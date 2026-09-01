@@ -1,0 +1,5 @@
+# Netlify 路由配置
+/              /index.html   200
+/admin         /index.html   200
+/front         /front.html   200
+/pan/*         /pan.html     200

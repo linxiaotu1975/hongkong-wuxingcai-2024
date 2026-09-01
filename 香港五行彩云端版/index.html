@@ -1,0 +1,1773 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>【总台】香港五行彩</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"Microsoft YaHei",sans-serif;background:linear-gradient(135deg,#0d001a,#2a0044,#0d001a);min-height:100vh;color:#fff;padding:10px}
+.container{max-width:1400px;margin:0 auto}
+h1{text-align:center;font-size:26px;color:#ffd700;text-shadow:0 0 12px rgba(255,215,0,0.6);margin:8px 0}
+
+.back-bar{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+.back-btn{padding:8px 16px;background:rgba(255,215,0,0.15);border:1px solid #ffd700;border-radius:8px;color:#ffd700;font-size:14px;cursor:pointer;transition:all .3s}
+.back-btn:hover{background:rgba(255,215,0,0.3)}
+
+.info-bar{background:rgba(0,0,0,0.3);border:1px solid rgba(255,215,0,0.3);border-radius:10px;padding:12px 15px;margin-bottom:12px;display:flex;gap:20px;flex-wrap:wrap;align-items:center}
+.info-bar .info-item{display:flex;align-items:center;gap:6px}
+.info-bar label{color:#ffd700;font-size:14px}
+.info-bar .info-value{color:#fff;font-size:15px;font-weight:bold}
+
+.main-nav{display:flex;gap:0;margin-bottom:12px;background:rgba(0,0,0,0.4);border-radius:12px;overflow:hidden;border:2px solid rgba(255,215,0,0.4)}
+.main-nav-tab{flex:1;padding:14px 4px;text-align:center;cursor:pointer;font-size:15px;font-weight:bold;color:#aaa;transition:all .3s;border-right:1px solid rgba(255,255,255,0.1);position:relative;user-select:none}
+.main-nav-tab:last-child{border-right:none}
+.main-nav-tab:hover{background:rgba(255,215,0,0.08);color:#ffd700}
+.main-nav-tab.active{background:linear-gradient(135deg,#ffd700,#ffaa00);color:#000}
+.main-nav-tab .nav-badge{position:absolute;top:4px;right:4px;background:#ff4444;color:#fff;font-size:10px;padding:1px 6px;border-radius:8px;font-weight:bold;display:none}
+.main-nav-tab.active .nav-badge{background:#000;color:#ffd700}
+
+.dim-total-box{background:linear-gradient(135deg,#2a0044,#4a0088);border:2px solid #ffd700;border-radius:12px;padding:20px;margin-bottom:12px;text-align:center;box-shadow:0 0 25px rgba(255,215,0,0.3);position:relative;overflow:hidden}
+.dim-total-box .dt-label{color:#ffd700;font-size:15px;margin-bottom:8px;letter-spacing:3px;font-weight:bold;position:relative;z-index:1}
+.dim-total-box .dt-value{color:#fff;font-size:42px;font-weight:bold;text-shadow:0 0 15px rgba(255,215,0,0.6);position:relative;z-index:1;font-variant-numeric:tabular-nums}
+.dim-total-box .dt-unit{color:#aaa;font-size:13px;margin-top:4px;position:relative;z-index:1}
+
+.front-stats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:15px}
+.front-stat{padding:8px 15px;border-radius:8px;text-align:center;min-width:100px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1)}
+.front-stat .label{font-size:11px;color:#aaa;margin-bottom:3px}
+.front-stat .value{font-size:18px;font-weight:bold;color:#ffd700}
+
+.pan-detail-panel{background:rgba(0,0,0,0.3);border:1px solid rgba(255,215,0,0.3);border-radius:10px;padding:15px;margin-bottom:15px}
+.pan-detail-panel .detail-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.pan-detail-panel .detail-header h3{color:#ffd700;font-size:18px;margin:0}
+.pan-detail-panel .detail-header span{color:#aaa;font-size:14px}
+.pan-detail-panel .detail-header span b{color:#ffd700;font-size:16px}
+.detail-table{width:100%;border-collapse:collapse;color:#fff;font-size:14px}
+.detail-table th{padding:10px 8px;border:1px solid rgba(255,215,0,0.3);text-align:center;background:rgba(255,215,0,0.15);color:#ffd700;font-weight:bold}
+.detail-table td{padding:10px 8px;border:1px solid rgba(255,215,0,0.2);text-align:center}
+.detail-table td.amount{text-align:right;color:#ffd700;font-weight:bold;font-size:15px}
+.detail-empty{text-align:center;color:#666;padding:30px;font-size:16px}
+
+.content-area{background:rgba(0,0,0,0.2);border-radius:10px;padding:12px;min-height:200px;border:1px solid rgba(255,255,255,0.1)}
+
+.pan-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-bottom:15px}
+.pan-card{background:rgba(0,0,0,0.4);border:2px solid rgba(255,255,255,0.1);border-radius:12px;padding:15px;transition:all .3s}
+.pan-card:hover{border-color:rgba(255,215,0,0.4);box-shadow:0 0 15px rgba(255,215,0,0.1)}
+.pan-card .pan-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.pan-card .pan-name{font-size:18px;font-weight:bold;color:#ffd700}
+.pan-card .pan-status{font-size:11px;padding:3px 8px;border-radius:10px;background:rgba(0,204,102,0.2);color:#00ff88;border:1px solid rgba(0,204,102,0.3)}
+.pan-card .pan-status.unpaid{background:rgba(255,68,68,0.2);color:#ff4444;border-color:rgba(255,68,68,0.3)}
+.pan-card .pan-total{text-align:center;font-size:24px;font-weight:bold;color:#fff;margin:8px 0}
+.pan-card .pan-dims{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-bottom:10px}
+.pan-card .dim-tag{font-size:11px;padding:3px 8px;border-radius:6px;background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.1);color:#aaa}
+.pan-card .dim-tag b{color:#ffd700}
+
+.btn-row{display:flex;gap:15px;justify-content:center;margin:15px 0}
+.btn{padding:12px 35px;border:none;border-radius:25px;font-size:16px;font-weight:bold;cursor:pointer;transition:all .3s}
+.btn-export{background:linear-gradient(135deg,#ffd700,#ffaa00);color:#000}
+.btn-clear{background:linear-gradient(135deg,#ff4444,#cc0000);color:#fff}
+.btn:hover{transform:scale(1.05);box-shadow:0 0 15px rgba(255,255,255,0.3)}
+.status{text-align:center;padding:8px;color:#00ff88;font-size:13px;min-height:36px}
+
+.error-box{background:rgba(255,0,0,0.2);border:1px solid #ff4444;border-radius:8px;padding:10px;margin:10px 0;color:#ff8888;font-size:13px;display:none}
+
+.odds-config-box{background:rgba(0,0,0,0.3);border:1px solid rgba(255,215,0,0.3);border-radius:10px;padding:12px 15px;margin-bottom:15px}
+.odds-config-title{color:#ffd700;font-size:14px;font-weight:bold;margin-bottom:10px;text-align:center}
+.odds-config-row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.odds-item{background:rgba(0,0,0,0.4);border:1px solid rgba(255,215,0,0.2);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:6px;min-width:140px}
+.odds-item label{color:#aaa;font-size:12px;white-space:nowrap}
+.odds-item input{width:60px;padding:4px 8px;border:1px solid rgba(255,215,0,0.3);border-radius:6px;background:rgba(0,0,0,0.3);color:#ffd700;font-size:14px;font-weight:bold;text-align:center;outline:none}
+.odds-item input:focus{border-color:#ffd700;box-shadow:0 0 8px rgba(255,215,0,0.3)}
+
+/* ===== 虎盘面板样式 ===== */
+.tiger-panel{background:linear-gradient(135deg,#2a0000,#4a0000);border:2px solid #ff4444;border-radius:12px;padding:15px;margin-bottom:15px;box-shadow:0 0 20px rgba(255,68,68,0.2)}
+.tiger-panel .tiger-title{color:#ff4444;font-size:18px;font-weight:bold;text-align:center;margin-bottom:12px;letter-spacing:2px;text-shadow:0 0 10px rgba(255,68,68,0.4)}
+.tiger-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
+.tiger-item{background:rgba(0,0,0,0.4);border:1px solid rgba(255,68,68,0.3);border-radius:8px;padding:10px;text-align:center}
+.tiger-item .tiger-dim{color:#ff8888;font-size:12px;margin-bottom:4px}
+.tiger-item .tiger-name{color:#ffd700;font-size:16px;font-weight:bold;margin-bottom:4px}
+.tiger-item .tiger-amount{color:#ff4444;font-size:20px;font-weight:bold;text-shadow:0 0 8px rgba(255,68,68,0.3)}
+.tiger-item .tiger-risk{color:#aaa;font-size:11px;margin-top:4px}
+.tiger-empty{text-align:center;color:#666;padding:20px;font-size:14px}
+
+/* ===== 复盘面板样式 ===== */
+.review-panel{background:linear-gradient(135deg,#001a0a,#00331a);border:2px solid #00ff88;border-radius:12px;padding:15px;margin-bottom:15px;box-shadow:0 0 20px rgba(0,255,136,0.2)}
+.review-panel .review-title{color:#00ff88;font-size:18px;font-weight:bold;text-align:center;margin-bottom:12px;letter-spacing:2px;text-shadow:0 0 10px rgba(0,255,136,0.4)}
+.review-input-row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:12px;align-items:center}
+.review-input-row label{color:#00ff88;font-size:13px;font-weight:bold}
+.review-input-row input{width:55px;padding:8px;background:rgba(0,0,0,0.5);border:1px solid #00ff88;border-radius:6px;color:#00ff88;font-size:16px;text-align:center;font-weight:bold}
+.review-input-row input.tm-input{border:2px solid #ffd700;color:#ffd700}
+.review-btn{padding:8px 20px;background:linear-gradient(135deg,#00ff88,#00aa55);border:none;border-radius:8px;color:#000;font-size:14px;font-weight:bold;cursor:pointer;transition:all .3s}
+.review-btn:hover{transform:scale(1.05);box-shadow:0 0 15px rgba(0,255,136,0.4)}
+.review-result-box{background:rgba(0,0,0,0.3);border:1px solid rgba(0,255,136,0.2);border-radius:10px;padding:12px;margin-top:10px}
+.review-result-box .result-title{color:#ffd700;font-size:14px;font-weight:bold;text-align:center;margin-bottom:10px}
+.review-result-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px}
+.result-item{background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:10px;text-align:center}
+.result-item .result-dim{color:#aaa;font-size:11px;margin-bottom:3px}
+.result-item .result-val{color:#fff;font-size:14px;font-weight:bold;margin-bottom:3px}
+.result-item .result-pay{color:#ff4444;font-size:13px;font-weight:bold}
+.result-item .result-profit{color:#00ff88;font-size:13px;font-weight:bold}
+.review-grand{background:rgba(0,0,0,0.4);border:1px solid rgba(255,215,0,0.3);border-radius:10px;padding:12px;margin-top:10px;text-align:center}
+.review-grand .rg-label{color:#ffd700;font-size:13px;margin-bottom:4px}
+.review-grand .rg-value{font-size:24px;font-weight:bold}
+.review-grand .rg-profit{color:#00ff88;text-shadow:0 0 10px rgba(0,255,136,0.4)}
+.review-grand .rg-loss{color:#ff4444;text-shadow:0 0 10px rgba(255,68,68,0.4)}
+
+@media(max-width:768px){
+.main-nav-tab{font-size:13px;padding:10px 2px}
+.pan-list{grid-template-columns:1fr}
+.dim-total-box .dt-value{font-size:28px}
+.detail-table{font-size:12px}
+.detail-table th,.detail-table td{padding:6px 4px}
+.info-bar{flex-direction:column;align-items:flex-start}
+.odds-config-row{gap:6px}
+.odds-item{min-width:auto;padding:6px 8px}
+.odds-item input{width:50px}
+}
+
+/* ===== 登录覆盖层 ===== */
+.login-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:linear-gradient(135deg,#0d001a,#2a0044,#0d001a);display:none;justify-content:center;align-items:center;z-index:9999;transition:opacity .5s}
+.login-overlay.show{display:flex}
+.login-box{background:rgba(0,0,0,0.6);border:2px solid #ffd700;border-radius:16px;padding:40px 30px;width:90%;max-width:400px;text-align:center;box-shadow:0 0 40px rgba(255,215,0,0.3);animation:loginPop .4s ease-out}
+@keyframes loginPop{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+.login-title{font-size:24px;color:#ffd700;font-weight:bold;margin-bottom:10px;text-shadow:0 0 10px rgba(255,215,0,0.5)}
+.login-tip{color:#aaa;font-size:14px;margin-bottom:25px}
+.login-label{text-align:left;color:#ffd700;font-size:14px;display:block;margin-bottom:8px}
+.login-input{width:100%;padding:12px;background:rgba(0,0,0,0.5);border:2px solid #ffd700;border-radius:8px;color:#ffd700;font-size:16px;text-align:center;outline:none;transition:all .3s}
+.login-input:focus{box-shadow:0 0 15px rgba(255,215,0,0.3)}
+.login-error{color:#ff4444;font-size:13px;margin-bottom:15px;min-height:20px;display:none}
+.login-btn{width:100%;padding:14px;background:linear-gradient(135deg,#ffd700,#ffaa00);border:none;border-radius:8px;color:#000;font-size:16px;font-weight:bold;cursor:pointer;transition:all .3s}
+.login-btn:hover{transform:scale(1.02);box-shadow:0 0 20px rgba(255,215,0,0.4)}
+.login-hint{color:#888;font-size:12px;margin-top:20px}
+/* ===== 修改密码弹窗 ===== */
+.pwd-modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);display:none;justify-content:center;align-items:center;z-index:10000}
+.pwd-modal-overlay.show{display:flex}
+.pwd-modal{background:linear-gradient(135deg,#0d001a,#2a0044);border:2px solid #ffd700;border-radius:15px;padding:25px;width:90%;max-width:380px;box-shadow:0 0 40px rgba(255,215,0,0.3)}
+.pwd-modal-title{text-align:center;font-size:20px;color:#ffd700;margin-bottom:15px;font-weight:bold}
+.pwd-modal-row{margin-bottom:15px}
+.pwd-modal-row label{display:block;color:#ffd700;font-size:13px;margin-bottom:6px;text-align:left}
+.pwd-modal-row input{width:100%;padding:10px;background:rgba(0,0,0,0.5);border:1px solid #ffd700;border-radius:8px;color:#ffd700;font-size:15px;text-align:center;outline:none}
+.pwd-modal-error{color:#ff4444;font-size:12px;text-align:center;margin-bottom:10px;min-height:18px}
+.pwd-modal-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pwd-modal-btn{padding:12px;border:none;border-radius:8px;font-size:15px;font-weight:bold;cursor:pointer;transition:all .3s;font-family:inherit}
+.pwd-modal-btn:hover{transform:scale(1.05)}
+.pwd-btn-confirm{background:linear-gradient(135deg,#ffd700,#ffaa00);color:#000}
+.pwd-btn-cancel{background:rgba(255,255,255,0.1);color:#aaa;border:1px solid rgba(255,255,255,0.3)}
+
+
+/* ===== 期数显示条 ===== */
+.qishu-bar{display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,0.4);border:1px solid rgba(255,215,0,0.2);border-radius:10px;padding:10px 15px;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.qishu-info{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.qishu-label{color:#ffd700;font-size:13px;font-weight:bold;white-space:nowrap}
+.qishu-value{color:#fff;font-size:14px}
+.qishu-value b{color:#ffd700;font-size:16px}
+.qishu-actions{display:flex;gap:8px}
+.qishu-btn{padding:6px 14px;border-radius:6px;font-size:12px;font-weight:bold;cursor:pointer;border:none;font-family:inherit;transition:all .3s}
+.qishu-btn:hover{transform:scale(1.05)}
+.btn-set{background:linear-gradient(135deg,#ffd700,#ffaa00);color:#000}
+/* ===== 期数设置弹窗 ===== */
+.qishu-modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.85);display:none;justify-content:center;align-items:center;z-index:10001}
+.qishu-modal-overlay.show{display:flex}
+.qishu-modal{background:linear-gradient(135deg,#0d001a,#2a0044);border:2px solid #ffd700;border-radius:15px;padding:25px;width:90%;max-width:420px;box-shadow:0 0 40px rgba(255,215,0,0.3)}
+.qishu-modal-title{text-align:center;font-size:20px;color:#ffd700;margin-bottom:15px;font-weight:bold}
+.qishu-modal-row{margin-bottom:15px}
+.qishu-modal-row label{display:block;color:#ffd700;font-size:13px;margin-bottom:6px;text-align:left}
+.qishu-modal-row input,.qishu-modal-row select{width:100%;padding:10px;background:rgba(0,0,0,0.5);border:1px solid #ffd700;border-radius:8px;color:#ffd700;font-size:15px;text-align:center;outline:none;font-family:inherit}
+.qishu-modal-row input[type="date"],.qishu-modal-row input[type="time"]{color-scheme:dark}
+.qishu-modal-btns{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:20px}
+.qishu-modal-btn{padding:12px;border:none;border-radius:8px;font-size:15px;font-weight:bold;cursor:pointer;font-family:inherit;transition:all .3s}
+.qishu-modal-btn:hover{transform:scale(1.05)}
+.qishu-btn-save{background:linear-gradient(135deg,#ffd700,#ffaa00);color:#000}
+.qishu-btn-cancel{background:rgba(255,255,255,0.1);color:#aaa;border:1px solid rgba(255,255,255,0.3)}
+.qishu-modal-hint{color:#888;font-size:11px;text-align:center;margin-top:10px}
+
+</style>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+  <script src="js/supabase-config.js"></script>
+  <script src="js/supabase-data.js"></script>
+</head>
+<body>
+
+<!-- 登录覆盖层 -->
+<div class="login-overlay" id="loginOverlay">
+<div class="login-box">
+<div class="login-title">🔐 总台登录</div>
+<div class="login-tip">请输入总台密码进入系统</div>
+<label class="login-label">登录密码</label>
+<input type="password" class="login-input" id="loginPwd" placeholder="请输入密码" autocomplete="off">
+<div class="login-error" id="loginError">密码错误，请重试</div>
+<button class="login-btn" id="loginBtn">🔒 登录</button>
+<div class="login-hint">初始密码: 123456</div>
+</div>
+</div>
+<!-- 修改密码弹窗 -->
+<div class="pwd-modal-overlay" id="pwdModal">
+<div class="pwd-modal">
+<div class="pwd-modal-title">🔒 修改密码</div>
+<div class="pwd-modal-row"><label>旧密码</label><input type="password" id="pwdOld" placeholder="请输入旧密码"></div>
+<div class="pwd-modal-row"><label>新密码</label><input type="password" id="pwdNew" placeholder="请输入新密码"></div>
+<div class="pwd-modal-row"><label>确认新密码</label><input type="password" id="pwdConfirm" placeholder="请再次输入新密码"></div>
+<div class="pwd-modal-error" id="pwdError"></div>
+<div class="pwd-modal-btns">
+<button class="pwd-modal-btn pwd-btn-confirm" id="btnPwdConfirm">✓ 确认修改</button>
+<button class="pwd-modal-btn pwd-btn-cancel" id="btnPwdCancel">✕ 取消</button>
+</div>
+</div>
+</div>
+
+<div class="container">
+<h1>🎯 【总台】香港五行彩 <span style="font-size:12px;color:#0f0">(v3-含赔率应付·完整7维)</span></h1>
+
+<div class="back-bar" style="justify-content:flex-end;">
+<div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;">
+<button class="back-btn" id="btnChangePwd" style="background:rgba(0,255,136,0.15);border-color:#00ff88;color:#00ff88;font-size:13px;">🔒 修改密码</button>
+<button class="back-btn" id="btnLogout" style="background:rgba(255,68,68,0.15);border-color:#ff4444;color:#ff4444;font-size:13px;">🚪 退出登录</button>
+<span style="color:#aaa;font-size:13px">总台编号: <b style="color:#ffd700">ZT-001</b></span>
+</div>
+</div>
+
+<div class="error-box" id="errorBox"></div>
+
+<div class="info-bar">
+<div class="info-item"><label>总台名称:</label><div class="info-value">香港五行彩总台</div></div>
+<div class="info-item"><label>收款前台:</label><div class="info-value" id="frontNameDisplay">--</div></div>
+<div class="info-item"><label>子盘总数:</label><div class="info-value" id="panTotalCount">0</div></div>
+<div class="info-item"><label>最后更新:</label><div class="info-value" id="lastUpdate">--</div></div>
+</div>
+
+<div class="main-nav" id="mainNav">
+<div class="main-nav-tab active" data-tab="0" id="nav0">🔢 特码<span class="nav-badge" id="badge0">0</span></div>
+<div class="main-nav-tab" data-tab="1" id="nav1">🐭 生肖<span class="nav-badge" id="badge1">0</span></div>
+<div class="main-nav-tab" data-tab="2" id="nav2">🎯 平码<span class="nav-badge" id="badge2">0</span></div>
+<div class="main-nav-tab" data-tab="3" id="nav3">🔴 红蓝绿波<span class="nav-badge" id="badge3">0</span></div>
+<div class="main-nav-tab" data-tab="4" id="nav4">☯️ 五行<span class="nav-badge" id="badge4">0</span></div>
+<div class="main-nav-tab" data-tab="5" id="nav5">📏 大小<span class="nav-badge" id="badge5">0</span></div>
+<div class="main-nav-tab" data-tab="6" id="nav6">⚖️ 单双<span class="nav-badge" id="badge6">0</span></div>
+</div>
+
+<div class="dim-total-box">
+  <div style="display:flex;justify-content:center;gap:15px;flex-wrap:wrap;align-items:flex-start;">
+    <div style="text-align:center;min-width:140px;background:rgba(255,215,0,0.15);border:1px solid rgba(255,215,0,0.4);border-radius:10px;padding:10px 8px;">
+      <div class="dt-label" id="dtLabel" style="font-size:12px;color:#ffd700;">💰 特码投注总计</div>
+      <div id="dtTotal" style="color:#ffd700;font-size:28px;font-weight:bold;text-shadow:0 0 10px rgba(255,215,0,0.4);margin-top:4px;">0</div>
+      <div style="font-size:12px;color:#ffd700;">元</div>
+    </div>
+    <div style="text-align:center;min-width:140px;background:rgba(255,0,0,0.15);border:1px solid rgba(255,68,68,0.4);border-radius:10px;padding:10px 8px;">
+      <div class="dt-label" style="font-size:12px;color:#ff8888;">🔴 最大赔付 TOP4</div>
+      <div id="maxPayNums" style="color:#ff4444;font-size:13px;font-weight:bold;margin-top:4px;line-height:1.6;">--</div>
+    </div>
+    <div style="text-align:center;min-width:140px;background:rgba(0,255,136,0.1);border:1px solid rgba(0,204,102,0.4);border-radius:10px;padding:10px 8px;">
+      <div class="dt-label" style="font-size:12px;color:#00ff88;">🟢 最小赔付 TOP4</div>
+      <div id="minPayNums" style="color:#00ff88;font-size:13px;font-weight:bold;margin-top:4px;line-height:1.6;">--</div>
+    </div>
+    <div style="text-align:center;min-width:140px;background:rgba(255,215,0,0.1);border:1px solid rgba(255,215,0,0.4);border-radius:10px;padding:10px 8px;">
+      <div class="dt-label" style="font-size:12px;color:#ffd700;">🟡 最接近投注总计</div>
+      <div id="midPayNums" style="color:#ffd700;font-size:13px;font-weight:bold;margin-top:4px;line-height:1.6;">--</div>
+    </div>
+    <div style="text-align:center;min-width:140px;background:rgba(0,255,136,0.15);border:1px solid rgba(0,255,136,0.4);border-radius:10px;padding:10px 8px;">
+      <div class="dt-label" style="font-size:12px;color:#00ff88;">💧 抽水后金额</div>
+      <div id="afterShui" style="color:#00ff88;font-size:28px;font-weight:bold;text-shadow:0 0 10px rgba(0,255,136,0.4);margin-top:4px;">0</div>
+      <div style="font-size:12px;color:#00ff88;">元</div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="odds-config-box" id="oddsConfigBox">
+  <div class="odds-config-title">⚙️ 赔率设置</div>
+  <div class="odds-config-row" id="oddsConfigRow"></div>
+</div>
+
+<div class="pan-detail-panel">
+<div class="detail-header"><h3 id="detailTitle">📋 子盘号码明细</h3><span>共 <b id="detailCount">0</b> 项 | 合计 <b id="detailTotal">0</b> 元</span></div>
+<div style="max-height:350px;overflow-y:auto;">
+<table class="detail-table"><thead><tr id="detailHeader"><th>排名</th><th>号码</th><th>波色</th><th>生肖</th><th>五行</th><th>投注金额</th><th>赔率</th><th>应付金额</th></tr></thead><tbody id="detailBody"></tbody></table>
+</div>
+<div id="detailEmpty" class="detail-empty">暂无数据</div>
+</div>
+
+<!-- ===== 虎盘：高风险大额投注TOP ===== -->
+<div class="tiger-panel" id="tigerPanel">
+<div class="tiger-title">🎯 最合适开奖结果 TOP20（子盘+辅注合并）</div>
+<div class="tiger-grid" id="tigerGrid">
+<div class="tiger-empty">暂无大额投注数据</div>
+</div>
+</div>
+
+<!-- ===== 复盘：开奖结果核对 ===== -->
+<div class="review-panel" id="reviewPanel">
+<div class="review-title">🎯 复盘 · 开奖结果盈亏核对（子盘+辅注合并）</div>
+<div class="review-input-row">
+<label>🎲 本期开奖号码:</label>
+<input type="number" class="result-num" id="rv1" min="1" max="49" placeholder="正1">
+<input type="number" class="result-num" id="rv2" min="1" max="49" placeholder="正2">
+<input type="number" class="result-num" id="rv3" min="1" max="49" placeholder="正3">
+<input type="number" class="result-num" id="rv4" min="1" max="49" placeholder="正4">
+<input type="number" class="result-num" id="rv5" min="1" max="49" placeholder="正5">
+<input type="number" class="result-num" id="rv6" min="1" max="49" placeholder="正6">
+<input type="number" class="result-num tm-input" id="rv7" min="1" max="49" placeholder="特码">
+<button class="review-btn" id="btnReview">🧮 计算赔付</button>
+<button class="review-btn" id="btnClearReview" style="background:linear-gradient(135deg,#ff4444,#cc0000);color:#fff">✕ 清空</button>
+</div>
+<div id="reviewResultArea"></div>
+</div>
+
+<div class="content-area" id="contentArea"></div>
+<div class="front-stats">
+<div class="front-stat"><div class="label">📋 子盘数量</div><div class="value" id="statPanCount">0</div></div>
+<div class="front-stat"><div class="label">✅ 已收款</div><div class="value" id="statPaid">0</div></div>
+<div class="front-stat"><div class="label">⏳ 未收款</div><div class="value" id="statUnpaid">0</div></div>
+<div class="front-stat"><div class="label">💵 已收金额</div><div class="value" id="statPaidAmount">0</div></div>
+</div>
+
+
+<div class="btn-row">
+<button class="btn btn-export" id="btnExport">📥 导出报表</button>
+<button class="btn btn-clear" id="btnClear">🗑️ 清空所有数据</button>
+</div>
+<div class="status" id="status">【总台】汇总收款前台所有子盘，各维度独立统计（7维完整版）</div>
+</div>
+
+<script>
+// 初始化数据库
+document.addEventListener("DOMContentLoaded", async function() {
+  await initDB();
+  await syncQishuFromDB();
+  subscribeQishu(function(payload) {
+    console.log("期数更新:", payload);
+    syncQishuFromDB();
+  });
+});
+
+async function syncQishuFromDB() {
+  var data = await loadQishu();
+  if (data) {
+    localStorage.setItem(QISHU_KEY, JSON.stringify({
+      year: data.year,
+      date: data.date,
+      qishu: data.qishu_num,
+      time: data.time
+    }));
+    updateQishuDisplay();
+  }
+}
+
+async function saveQishuToDB() {
+  var date = document.getElementById("qishuDate").value;
+  var num = parseInt(document.getElementById("qishuNum").value);
+  var time = document.getElementById("qishuTime").value;
+  if (!date || !num || !time) { alert("请填写完整信息"); return; }
+  var d = new Date(date + "T00:00:00");
+  var wd = d.getDay();
+  if (KAIJIANG_DAYS.indexOf(wd) === -1) {
+    var dayNames = {0:"周日",1:"周一",3:"周三",5:"周五"};
+    var valid = KAIJIANG_DAYS.map(function(x){return dayNames[x];}).join("、");
+    alert("开奖日必须是：" + valid);
+    return;
+  }
+  var success = await saveQishuDB({
+    year: d.getFullYear(),
+    date: date,
+    qishu_num: num,
+    time: time
+  });
+  if (success) {
+    localStorage.setItem(QISHU_KEY, JSON.stringify({
+      year: d.getFullYear(),
+      date: date,
+      qishu: num,
+      time: time
+    }));
+    updateQishuDisplay();
+    closeQishuModal();
+  }
+}
+
+
+// ===== 登录系统 =====
+var __LOGIN_KEY='wuxingcai_zt_logged_in';
+var __PWD_KEY='wuxingcai_zt_pwd';
+function initLogin(){
+var overlay=document.getElementById('loginOverlay');
+var btn=document.getElementById('loginBtn');
+var input=document.getElementById('loginPwd');
+var err=document.getElementById('loginError');
+if(!overlay)return;
+var logged=sessionStorage.getItem(__LOGIN_KEY);
+if(!logged){overlay.classList.add('show');}
+else{overlay.style.display='none';}
+if(!sessionStorage.getItem(__PWD_KEY)){sessionStorage.setItem(__PWD_KEY,'123456');}
+function doLogin(){
+var pwd=input.value.trim();
+var correct=sessionStorage.getItem(__PWD_KEY)||'123456';
+if(pwd===correct){
+sessionStorage.setItem(__LOGIN_KEY,'1');
+overlay.classList.remove('show');
+setTimeout(function(){overlay.style.display='none';},500);
+}else{
+err.style.display='block';
+input.style.borderColor='#ff4444';
+setTimeout(function(){input.style.borderColor='#ffd700';},1000);
+}
+}
+if(btn)btn.addEventListener('click',doLogin);
+if(input)input.addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
+var btnChange=document.getElementById('btnChangePwd');
+var btnLogout=document.getElementById('btnLogout');
+var pwdModal=document.getElementById('pwdModal');
+var btnPwdConfirm=document.getElementById('btnPwdConfirm');
+var btnPwdCancel=document.getElementById('btnPwdCancel');
+if(btnChange)btnChange.addEventListener('click',function(){
+document.getElementById('pwdOld').value='';document.getElementById('pwdNew').value='';document.getElementById('pwdConfirm').value='';document.getElementById('pwdError').textContent='';if(pwdModal)pwdModal.classList.add('show');
+});
+if(btnLogout)btnLogout.addEventListener('click',function(){
+if(confirm('确定退出登录？')){sessionStorage.removeItem(__LOGIN_KEY);location.reload();}
+});
+if(btnPwdCancel)btnPwdCancel.addEventListener('click',function(){if(pwdModal)pwdModal.classList.remove('show');});
+if(pwdModal)pwdModal.addEventListener('click',function(e){if(e.target===this)pwdModal.classList.remove('show');});
+if(btnPwdConfirm)btnPwdConfirm.addEventListener('click',function(){
+var oldP=document.getElementById('pwdOld').value.trim();
+var newP=document.getElementById('pwdNew').value.trim();
+var conP=document.getElementById('pwdConfirm').value.trim();
+var errEl=document.getElementById('pwdError');
+var correct=sessionStorage.getItem(__PWD_KEY)||'123456';
+if(!oldP||!newP||!conP){errEl.textContent='请填写所有密码字段';return;}
+if(oldP!==correct){errEl.textContent='旧密码错误';return;}
+if(newP!==conP){errEl.textContent='两次输入的新密码不一致';return;}
+if(newP.length<6){errEl.textContent='新密码长度不能少于6位';return;}
+sessionStorage.setItem(__PWD_KEY,newP);
+errEl.style.color='#00ff88';errEl.textContent='密码修改成功！';
+setTimeout(function(){if(pwdModal)pwdModal.classList.remove('show');errEl.style.color='#ff4444';},1500);
+});
+}
+initLogin();
+
+
+// ===== 期数管理系统 =====
+var QISHU_KEY = 'wuxingcai_qishu';
+var KAIJIANG_DAYS = [1, 3, 5, 0];
+function getQishuData(){
+  var data = localStorage.getItem(QISHU_KEY);
+  if(data) return JSON.parse(data);
+  var today = new Date();
+  var yyyy = today.getFullYear();
+  var mm = String(today.getMonth()+1).padStart(2,'0');
+  var dd = String(today.getDate()).padStart(2,'0');
+  return {year:yyyy, date:yyyy+'-'+mm+'-'+dd, qishu:137, time:'22:30'};
+}
+function saveQishuData(obj){
+  localStorage.setItem(QISHU_KEY, JSON.stringify(obj));
+}
+function formatDateCN(dateStr){
+  var d = new Date(dateStr+'T00:00:00');
+  var weekdays = ['周日','周一','周二','周三','周四','周五','周六'];
+  var y = d.getFullYear();
+  var m = String(d.getMonth()+1).padStart(2,'0');
+  var day = String(d.getDate()).padStart(2,'0');
+  var w = weekdays[d.getDay()];
+  return y+'年'+m+'月'+day+'日 '+w;
+}
+function updateQishuDisplay(){
+  var data = getQishuData();
+  var el = document.getElementById('qishuDisplay');
+  if(el){
+    var dateCN = formatDateCN(data.date);
+    el.innerHTML = dateCN + ' <b>第' + data.qishu + '期</b> <span style="color:#aaa">开奖时间 ' + data.time + '</span>';
+  }
+}
+function openQishuModal(){
+  var data = getQishuData();
+  document.getElementById('qishuDate').value = data.date;
+  document.getElementById('qishuNum').value = data.qishu;
+  document.getElementById('qishuTime').value = data.time;
+  document.getElementById('qishuModal').classList.add('show');
+}
+function closeQishuModal(){
+  document.getElementById('qishuModal').classList.remove('show');
+}
+function saveQishu(){
+  var date = document.getElementById('qishuDate').value;
+  var num = parseInt(document.getElementById('qishuNum').value);
+  var time = document.getElementById('qishuTime').value;
+  if(!date || !num || !time){ alert('请填写完整信息'); return; }
+  var d = new Date(date+'T00:00:00');
+  var wd = d.getDay();
+  if(KAIJIANG_DAYS.indexOf(wd) === -1){
+    var dayNames = {0:'周日',1:'周一',3:'周三',5:'周五'};
+    var valid = KAIJIANG_DAYS.map(function(x){return dayNames[x];}).join('、');
+    alert('开奖日必须是：' + valid + '\n当前选择是：' + ['周日','周一','周二','周三','周四','周五','周六'][wd]);
+    return;
+  }
+  saveQishuData({year:d.getFullYear(), date:date, qishu:num, time:time});
+  updateQishuDisplay();
+  closeQishuModal();
+}
+function getFirstMondayOfYear(year) {
+  var d = new Date(year, 0, 1);
+  while (d.getDay() !== 1) { d.setDate(d.getDate() + 1); }
+  var yyyy = d.getFullYear();
+  var mm = String(d.getMonth()+1).padStart(2,'0');
+  var dd = String(d.getDate()).padStart(2,'0');
+  return yyyy + '-' + mm + '-' + dd;
+}
+function calcNextKaijiangDate(dateStr) {
+  var curDate = new Date(dateStr + 'T00:00:00');
+  var curWd = curDate.getDay();
+  var nextDate = new Date(curDate);
+  var addDays = {1:2, 3:2, 5:2, 0:1};
+  nextDate.setDate(nextDate.getDate() + (addDays[curWd] || 2));
+  var yyyy = nextDate.getFullYear();
+  var mm = String(nextDate.getMonth()+1).padStart(2,'0');
+  var dd = String(nextDate.getDate()).padStart(2,'0');
+  return yyyy + '-' + mm + '-' + dd;
+}
+function autoCheckAndUpdate() {
+  var data = getQishuData();
+  if (!data || !data.date || !data.time) return;
+  var kaijiangDateTime = new Date(data.date + 'T' + data.time + ':00');
+  var now = new Date();
+  if (now >= kaijiangDateTime) {
+    var nextDate = calcNextKaijiangDate(data.date);
+    var nextYear = parseInt(nextDate.split('-')[0]);
+    var nextQishu = data.qishu + 1;
+    var curYear = parseInt(data.date.split('-')[0]);
+    if (nextYear > curYear) {
+      var firstMonday = getFirstMondayOfYear(nextYear);
+      if (nextDate === firstMonday) { nextQishu = 1; }
+    }
+    saveQishuData({year: nextYear, date: nextDate, qishu: nextQishu, time: data.time});
+    updateQishuDisplay();
+  }
+}
+document.addEventListener('click', function(e){
+  var modal = document.getElementById('qishuModal');
+  if(modal && e.target === modal) closeQishuModal();
+});
+updateQishuDisplay();
+setTimeout(function(){ autoCheckAndUpdate(); }, 500);
+
+// ===== 调试信息 =====
+var __debugInfo=[];
+function __log(m){__debugInfo.push(m);console.log(m);}
+__log('JS开始加载');
+
+window.onerror=function(msg,url,line){
+__log('ERROR: '+msg+' 行'+line);
+var el=document.getElementById('errorBox');
+if(el){el.style.display='block';el.textContent='JS错误: '+msg+' (行'+line+')';}
+};
+
+var RED=[1,2,7,8,12,13,18,19,23,24,29,30,34,35,40,45,46];
+var BLUE=[3,4,9,10,14,15,20,25,26,31,36,37,41,42,47,48];
+var GREEN=[5,6,11,16,17,21,22,27,28,32,33,38,39,43,44,49];
+var SX=[
+{name:'马',icon:'🐴',nums:[1,13,25,37,49]},{name:'蛇',icon:'🐍',nums:[2,14,26,38]},
+{name:'龙',icon:'🐲',nums:[3,15,27,39]},{name:'兔',icon:'🐰',nums:[4,16,28,40]},
+{name:'虎',icon:'🐯',nums:[5,17,29,41]},{name:'牛',icon:'🐮',nums:[6,18,30,42]},
+{name:'鼠',icon:'🐭',nums:[7,19,31,43]},{name:'猪',icon:'🐷',nums:[8,20,32,44]},
+{name:'狗',icon:'🐶',nums:[9,21,33,45]},{name:'鸡',icon:'🐔',nums:[10,22,34,46]},
+{name:'猴',icon:'🐵',nums:[11,23,35,47]},{name:'羊',icon:'🐑',nums:[12,24,36,48]}
+];
+var WX=[
+{name:'金',icon:'🟡',nums:[9,10,21,22,25,33,34,37,41,46,47]},
+{name:'木',icon:'🟢',nums:[3,4,15,16,28,44,48]},
+{name:'水',icon:'🔵',nums:[1,12,13,24,30,36,42,43]},
+{name:'火',icon:'🔴',nums:[6,7,17,18,19,26,29,31,38,49]},
+{name:'土',icon:'🟤',nums:[2,5,8,11,14,20,23,27,32,35,39,40,45]}
+];
+var BOSE=[{name:'红波',icon:'🔴',nums:RED},{name:'蓝波',icon:'🔵',nums:BLUE},{name:'绿波',icon:'🟢',nums:GREEN}];
+
+// 大小/单双配置
+var DX_CONFIG=[
+{name:'大',icon:'大',nums:[25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49]},
+{name:'小',icon:'小',nums:[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24]}
+];
+var DS_CONFIG=[
+{name:'单',icon:'单',nums:[1,3,5,7,9,11,13,15,17,19,21,23,25,27,29,31,33,35,37,39,41,43,45,47,49]},
+{name:'双',icon:'双',nums:[2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,36,38,40,42,44,46,48]}
+];
+
+function gc(n){if(RED.indexOf(n)>=0)return'red';if(BLUE.indexOf(n)>=0)return'blue';return'green';}
+function gs(n){for(var i=0;i<SX.length;i++)if(SX[i].nums.indexOf(n)>=0)return SX[i];return SX[0];}
+function gw(n){for(var i=0;i<WX.length;i++)if(WX[i].nums.indexOf(n)>=0)return WX[i];return WX[0];}
+function p2(n){return n<10?'0'+n:''+n;}
+
+var frontData=null;
+var extraData={num:{},sx:{},pingma:{},bose:{},wx:{},daxiao:{},danshuang:{}};
+var oddsConfig={numLine1:1.0,numOther:1.0,sxLine1:1.0,sxOther:1.0,pingma:1.0,bose:1.0,wx:1.0,daxiao:1.0,danshuang:1.0};
+var shuiConfig={num:0.0,sx:0.0,pingma:0.0,bose:0.0,wx:0.0,daxiao:0.0,danshuang:0.0};
+var tab=0;
+var tabs=['num','sx','pingma','bose','wx','daxiao','danshuang'];
+var labels=['💰 特码投注总计','💰 生肖投注总计','💰 平码投注总计','💰 红蓝绿波投注总计','💰 五行投注总计','💰 大小投注总计','💰 单双投注总计'];
+var dTitles=['📋 子盘特码明细','📋 子盘生肖明细','📋 子盘平码明细','📋 子盘红蓝绿波明细','📋 子盘五行明细','📋 子盘大小明细','📋 子盘单双明细'];
+var dHeaders=[
+'<th>排名</th><th>号码</th><th>波色</th><th>生肖</th><th>五行</th><th>投注金额</th><th>赔率</th><th>应付金额</th>',
+'<th>排名</th><th>生肖</th><th>包含号码</th><th>投注金额</th><th>赔率</th><th>应付金额</th>',
+'<th>排名</th><th>平码</th><th>波色</th><th>生肖</th><th>五行</th><th>投注金额</th><th>赔率</th><th>应付金额</th>',
+'<th>排名</th><th>波色</th><th>包含号码</th><th>投注金额</th><th>赔率</th><th>应付金额</th>',
+'<th>排名</th><th>五行</th><th>包含号码</th><th>投注金额</th><th>赔率</th><th>应付金额</th>',
+'<th>排名</th><th>大小</th><th>包含号码</th><th>投注金额</th><th>赔率</th><th>应付金额</th>',
+'<th>排名</th><th>单双</th><th>包含号码</th><th>投注金额</th><th>赔率</th><th>应付金额</th>'
+];
+
+function safeStorageGet(key){try{if(window.localStorage)return localStorage.getItem(key);}catch(e){return null;}return null;}
+function safeStorageSet(key,val){try{if(window.localStorage){localStorage.setItem(key,val);return true;}}catch(e){return false;}return false;}
+function safeStorageRemove(key){try{if(window.localStorage){localStorage.removeItem(key);return true;}}catch(e){return false;}return false;}
+
+// ===== 初始化：先绑定事件，再加载数据 =====
+function init(){
+__log('init()开始');
+
+// 第一步：绑定事件（最高优先级，任何情况下都要执行）
+try{bindEvents();__log('bindEvents完成');}catch(e){__log('bindEvents失败: '+e.message);}
+
+// 第二步：加载数据
+try{loadData();__log('loadData完成');}catch(e){__log('loadData失败: '+e.message);}
+
+// 第三步：渲染
+try{switchTab(0);__log('switchTab完成');}catch(e){__log('switchTab失败: '+e.message);}
+try{updateInfo();__log('updateInfo完成');}catch(e){__log('updateInfo失败: '+e.message);}
+
+__log('init()结束');
+}
+
+function bindEvents(){
+__log('开始绑定事件');
+
+// 导航栏 - addEventListener
+var navTabs=document.querySelectorAll('.main-nav-tab');
+__log('找到导航栏tab数量: '+navTabs.length);
+for(var i=0;i<navTabs.length;i++){
+(function(idx){
+try{
+navTabs[idx].addEventListener('click',function(e){
+e.preventDefault();e.stopPropagation();
+__log('点击nav'+idx);
+switchTab(idx);
+});
+}catch(ee){__log('nav绑定失败: '+ee.message);}
+})(i);
+}
+
+// 按钮事件
+try{
+var btnBack=document.getElementById('btnBack');
+if(btnBack)btnBack.addEventListener('click',goFront);
+}catch(e){__log('btnBack绑定失败');}
+try{
+var btnExport=document.getElementById('btnExport');
+if(btnExport)btnExport.addEventListener('click',exportData);
+}catch(e){__log('btnExport绑定失败');}
+try{
+var btnClear=document.getElementById('btnClear');
+if(btnClear)btnClear.addEventListener('click',clearAll);
+}catch(e){__log('btnClear绑定失败');}
+try{
+var btnReview=document.getElementById('btnReview');
+if(btnReview)btnReview.addEventListener('click',doReview);
+}catch(e){__log('btnReview绑定失败');}
+try{
+var btnClearReview=document.getElementById('btnClearReview');
+if(btnClearReview)btnClearReview.addEventListener('click',clearReview);
+}catch(e){__log('btnClearReview绑定失败');}
+try{
+var rvInputs=['rv1','rv2','rv3','rv4','rv5','rv6','rv7'];
+for(var i=0;i<rvInputs.length;i++){
+var el=document.getElementById(rvInputs[i]);
+if(el)el.addEventListener('keydown',function(e){if(e.key==='Enter')doReview();});
+}
+}catch(e){__log('rvInput绑定失败');}
+
+__log('事件绑定完成');
+}
+
+function loadData(){
+var saved=safeStorageGet('wuxingcai_front_data');
+if(saved){
+try{frontData=JSON.parse(saved);}catch(e){frontData=null;}
+}
+if(!frontData)frontData=genDemo();
+var pans=frontData.pans||[];
+for(var i=0;i<pans.length;i++){
+if(!pans[i].data)pans[i].data={num:{},sx:{},pingma:{},bose:{},wx:{},daxiao:{},danshuang:{}};
+if(!pans[i].data.pingma)pans[i].data.pingma={};
+if(!pans[i].data.daxiao)pans[i].data.daxiao={};
+if(!pans[i].data.danshuang)pans[i].data.danshuang={};
+}
+// 加载前台辅注盘数据
+var savedExtra=safeStorageGet('wuxingcai_front_extra');
+if(savedExtra){
+try{extraData=JSON.parse(savedExtra);}catch(e){extraData={num:{},sx:{},pingma:{},bose:{},wx:{},daxiao:{},danshuang:{}};}
+}
+if(!extraData)extraData={num:{},sx:{},pingma:{},bose:{},wx:{},daxiao:{},danshuang:{}};
+if(!extraData.pingma)extraData.pingma={};
+if(!extraData.daxiao)extraData.daxiao={};
+if(!extraData.danshuang)extraData.danshuang={};
+// 加载赔率配置
+var savedOdds=safeStorageGet('wuxingcai_odds_config');
+if(savedOdds){
+try{var o=JSON.parse(savedOdds);for(var k in o)oddsConfig[k]=o[k];}catch(e){}
+}
+// 加载抽水配置
+var savedShui=safeStorageGet('wuxingcai_shui_config');
+if(savedShui){
+try{var s=JSON.parse(savedShui);for(var k in s)if(shuiConfig.hasOwnProperty(k))shuiConfig[k]=s[k];}catch(e){}
+}
+}
+
+function genDemo(){
+return {
+name:'收款前台1',
+pans:[
+{id:1,name:'盘1',paid:true,data:{num:{1:100,5:200,12:50,23:150,38:80},sx:{'鼠':300,'龙':500,'马':200},pingma:{},bose:{'红波':400,'蓝波':250},wx:{'金':350,'火':200,'土':150},daxiao:{'大':100,'小':50},danshuang:{'单':80,'双':120}}},
+{id:2,name:'盘2',paid:true,data:{num:{7:120,19:80,33:200},sx:{'虎':400,'猴':300},pingma:{},bose:{'绿波':350},wx:{'木':250,'水':180},daxiao:{'大':150},danshuang:{'双':100}}},
+{id:3,name:'盘3',paid:true,data:{num:{3:150,15:100,41:250},sx:{'牛':350,'蛇':450},pingma:{},bose:{'红波':300,'绿波':200},wx:{'金':400,'土':300},daxiao:{'小':80},danshuang:{'单':60}}},
+{id:4,name:'盘4',paid:true,data:{num:{9:180,27:120,45:90},sx:{'兔':280,'鸡':320},pingma:{},bose:{'蓝波':500},wx:{'木':200,'火':350,'水':150},daxiao:{'大':200,'小':100},danshuang:{'单':90,'双':110}}}
+]
+};
+}
+
+function calcDimTotal(dim){
+var t=0;
+var pans=frontData.pans||[];
+for(var p=0;p<pans.length;p++){
+var d=pans[p].data||{num:{},sx:{},pingma:{},bose:{},wx:{},daxiao:{},danshuang:{}};
+var m=d[dim]||{};
+for(var k in m)t+=m[k]||0;
+}
+return t;
+}
+
+function calcPanDimTotal(pan,dim){
+var d=pan.data||{num:{},sx:{},pingma:{},bose:{},wx:{},daxiao:{},danshuang:{}};
+var m=d[dim]||{};
+var t=0;
+for(var k in m)t+=m[k]||0;
+return t;
+}
+
+function calcPanTotal(pan){
+var d=pan.data||{num:{},sx:{},pingma:{},bose:{},wx:{},daxiao:{},danshuang:{}};
+var t=0;
+for(var k in d.num)t+=d.num[k]||0;
+for(var k in d.sx)t+=d.sx[k]||0;
+for(var k in d.pingma)t+=d.pingma[k]||0;
+for(var k in d.bose)t+=d.bose[k]||0;
+for(var k in d.wx)t+=d.wx[k]||0;
+return t;
+}
+
+function switchTab(t){
+__log('switchTab('+t+')');
+tab=t;
+for(var i=0;i<7;i++){
+var el=document.getElementById('nav'+i);
+if(el)el.classList.remove('active');
+}
+var activeEl=document.getElementById('nav'+t);
+if(activeEl)activeEl.classList.add('active');
+
+var dtLabel=document.getElementById('dtLabel');
+if(dtLabel)dtLabel.textContent=labels[t];
+var detailTitle=document.getElementById('detailTitle');
+if(detailTitle)detailTitle.textContent=dTitles[t];
+var detailHeader=document.getElementById('detailHeader');
+if(detailHeader)detailHeader.innerHTML=dHeaders[t];
+
+renderCards();
+updateStats();
+renderDetail();
+renderOddsConfig();
+}
+
+function renderCards(){
+var a=document.getElementById('contentArea');
+var pans=frontData.pans||[];
+if(pans.length===0){a.innerHTML='<div style="text-align:center;color:#666;padding:30px">暂无子盘数据</div>';return;}
+var h='<div class="pan-list">';
+
+// ===== 前台辅注盘卡片（排在最前面） =====
+var etNum=0,etSx=0,etPingma=0,etBose=0,etWx=0,etDaxiao=0,etDanshuang=0;
+for(var k in extraData.num)etNum+=extraData.num[k]||0;
+for(var k in extraData.sx)etSx+=extraData.sx[k]||0;
+for(var k in extraData.pingma)etPingma+=extraData.pingma[k]||0;
+for(var k in extraData.bose)etBose+=extraData.bose[k]||0;
+for(var k in extraData.wx)etWx+=extraData.wx[k]||0;
+for(var k in extraData.daxiao)etDaxiao+=extraData.daxiao[k]||0;
+for(var k in extraData.danshuang)etDanshuang+=extraData.danshuang[k]||0;
+var etTotal=etNum+etSx+etPingma+etBose+etWx+etDaxiao+etDanshuang;
+
+if(etTotal>0){
+h+='<div class="pan-card" style="border:2px solid #4488ff;">';
+h+='<div class="pan-header">';
+h+='<div class="pan-name" style="color:#4488ff">🎯 前台辅注盘</div>';
+h+='<div class="pan-status" style="background:rgba(68,136,255,0.2);color:#4488ff;border-color:rgba(68,136,255,0.4)">🎯 辅注</div>';
+h+='</div>';
+h+='<div class="pan-total" style="color:#4488ff;text-shadow:0 0 10px rgba(68,136,255,0.4)">'+etTotal.toLocaleString()+' <span style="font-size:14px;color:#aaa">元</span></div>';
+h+='<div style="text-align:center;font-size:12px;color:#888;margin-bottom:8px">前台辅注 · 各维度独立录入</div>';
+h+='<div class="pan-dims">';
+if(etNum>0)h+='<div class="dim-tag" style="border-color:rgba(68,136,255,0.3)">🔢 特码 <b style="color:#4488ff">'+etNum.toLocaleString()+'</b></div>';
+if(etSx>0)h+='<div class="dim-tag" style="border-color:rgba(68,136,255,0.3)">🐭 生肖 <b style="color:#4488ff">'+etSx.toLocaleString()+'</b></div>';
+if(etPingma>0)h+='<div class="dim-tag" style="border-color:rgba(68,136,255,0.3)">🎯 平码 <b style="color:#4488ff">'+etPingma.toLocaleString()+'</b></div>';
+if(etBose>0)h+='<div class="dim-tag" style="border-color:rgba(68,136,255,0.3)">🔴 波色 <b style="color:#4488ff">'+etBose.toLocaleString()+'</b></div>';
+if(etWx>0)h+='<div class="dim-tag" style="border-color:rgba(68,136,255,0.3)">☯️ 五行 <b style="color:#4488ff">'+etWx.toLocaleString()+'</b></div>';
+if(etDaxiao>0)h+='<div class="dim-tag" style="border-color:rgba(68,136,255,0.3)">📏 大小 <b style="color:#4488ff">'+etDaxiao.toLocaleString()+'</b></div>';
+if(etDanshuang>0)h+='<div class="dim-tag" style="border-color:rgba(68,136,255,0.3)">⚖️ 单双 <b style="color:#4488ff">'+etDanshuang.toLocaleString()+'</b></div>';
+h+='</div>';
+h+='</div>';
+}
+
+for(var p=0;p<pans.length;p++){
+var pan=pans[p];
+var dt=calcPanDimTotal(pan,tabs[tab]);
+var ft=calcPanTotal(pan);
+var nt=calcPanDimTotal(pan,'num');
+var st=calcPanDimTotal(pan,'sx');
+var pt=calcPanDimTotal(pan,'pingma');
+var bt=calcPanDimTotal(pan,'bose');
+var wt=calcPanDimTotal(pan,'wx');
+var dxt=calcPanDimTotal(pan,'daxiao');
+var dst=calcPanDimTotal(pan,'danshuang');
+var statusClass=pan.paid?'':'unpaid';
+var statusText=pan.paid?'✅ 已收款':'⏳ 未收款';
+
+h+='<div class="pan-card">';
+h+='<div class="pan-header">';
+h+='<div class="pan-name">📝 '+pan.name+'</div>';
+h+='<div class="pan-status '+statusClass+'">'+statusText+'</div>';
+h+='</div>';
+h+='<div class="pan-total">'+dt.toLocaleString()+' <span style="font-size:14px;color:#aaa">元</span></div>';
+h+='<div style="text-align:center;font-size:12px;color:#888;margin-bottom:8px">当前维度: '+(tab===0?'号码':tab===1?'生肖':tab===2?'平码':tab===3?'红蓝绿波':tab===4?'五行':tab===5?'大小':'单双')+'</div>';
+h+='<div class="pan-dims">';
+if(nt>0)h+='<div class="dim-tag">🔢 特码 <b>'+nt.toLocaleString()+'</b></div>';
+if(st>0)h+='<div class="dim-tag">🐭 生肖 <b>'+st.toLocaleString()+'</b></div>';
+if(pt>0)h+='<div class="dim-tag">🎯 平码 <b>'+pt.toLocaleString()+'</b></div>';
+if(bt>0)h+='<div class="dim-tag">🔴 波色 <b>'+bt.toLocaleString()+'</b></div>';
+if(wt>0)h+='<div class="dim-tag">☯️ 五行 <b>'+wt.toLocaleString()+'</b></div>';
+if(dxt>0)h+='<div class="dim-tag">📏 大小 <b>'+dxt.toLocaleString()+'</b></div>';
+if(dst>0)h+='<div class="dim-tag">⚖️ 单双 <b>'+dst.toLocaleString()+'</b></div>';
+h+='</div>';
+h+='</div>';
+}
+h+='</div>';
+a.innerHTML=h;
+}
+
+function updateStats(){
+var dt=calcDimTotal(tabs[tab]);
+var elDt=document.getElementById('dtTotal');
+if(elDt)elDt.textContent=dt.toLocaleString();
+
+// 抽水后金额（按当前维度）
+var shuiKey=tabs[tab];
+var shuiRate=(shuiConfig[shuiKey]||0)/100;
+var afterShui=Math.round(dt*(1-shuiRate));
+var elAfter=document.getElementById('afterShui');
+if(elAfter)elAfter.textContent=afterShui.toLocaleString();
+
+// 计算每个项目的赔付金额和波色
+var payItems=[];
+var pans=frontData.pans||[];
+var merged={};
+for(var p=0;p<pans.length;p++){
+var d=pans[p].data||{};
+var m=d[tabs[tab]]||{};
+for(var k in m)merged[k]=(merged[k]||0)+(m[k]||0);
+}
+
+// 辅助：根据号码获取波色标识
+function getBose(n){
+if(n<=0)return '';
+if(RED.indexOf(n)>=0)return '🔴';
+if(BLUE.indexOf(n)>=0)return '🔵';
+return '🟢';
+}
+
+if(tab===0){
+for(var i=1;i<=49;i++){
+var amt=merged[i]||0;
+var o=(i===1||i===13||i===25||i===37||i===49)?oddsConfig.numLine1:oddsConfig.numOther;
+var pay=Math.round(amt*(o||1.0));
+var s=gs(i);
+var b=getBose(i);
+payItems.push({n:p2(i),sx:s.name,bose:b,pay:pay});
+}
+}else if(tab===1){
+for(var i=0;i<SX.length;i++){
+var amt=merged[SX[i].name]||0;
+var o=(SX[i].name==='马')?oddsConfig.sxLine1:oddsConfig.sxOther;
+var pay=Math.round(amt*(o||1.0));
+var repNum=SX[i].nums[0]||0;
+var b=getBose(repNum);
+payItems.push({n:SX[i].name,bose:b,pay:pay});
+}
+}else if(tab===2){
+for(var i=1;i<=49;i++){
+var amt=merged[i]||0;
+var pay=Math.round(amt*(oddsConfig.pingma||1.0));
+var s=gs(i);
+var b=getBose(i);
+payItems.push({n:p2(i),sx:s.name,bose:b,pay:pay});
+}
+}else if(tab===3){
+for(var i=0;i<BOSE.length;i++){
+var amt=merged[BOSE[i].name]||0;
+var pay=Math.round(amt*(oddsConfig.bose||1.0));
+var repNum=BOSE[i].nums[0]||0;
+var b=getBose(repNum);
+payItems.push({n:BOSE[i].name,bose:b,pay:pay});
+}
+}else if(tab===4){
+for(var i=0;i<WX.length;i++){
+var amt=merged[WX[i].name]||0;
+var pay=Math.round(amt*(oddsConfig.wx||1.0));
+var repNum=WX[i].nums[0]||0;
+var b=getBose(repNum);
+payItems.push({n:WX[i].name,bose:b,pay:pay});
+}
+}else if(tab===5){
+for(var i=0;i<DX_CONFIG.length;i++){
+var amt=merged[DX_CONFIG[i].name]||0;
+var pay=Math.round(amt*(oddsConfig.daxiao||1.0));
+payItems.push({n:DX_CONFIG[i].name,pay:pay});
+}
+}else{
+for(var i=0;i<DS_CONFIG.length;i++){
+var amt=merged[DS_CONFIG[i].name]||0;
+var pay=Math.round(amt*(oddsConfig.danshuang||1.0));
+payItems.push({n:DS_CONFIG[i].name,pay:pay});
+}
+}
+
+// 按赔付金额排序
+payItems.sort(function(a,b){return b.pay-a.pay;});
+
+// 辅助函数：格式化号码+生肖+波色（直接使用预计算的bose）
+function fmt(it){
+var sxTxt=it.sx?it.sx:'';
+var boseTxt=it.bose?it.bose+' ':'';
+return boseTxt+it.n+(sxTxt?'号'+sxTxt:'')+'('+it.pay+')';
+}
+
+// 最大赔付 TOP4（纵向排列用<br>）
+var max4=payItems.slice(0,4);
+var maxTxt=max4.map(fmt).join('<br>');
+var elMax=document.getElementById('maxPayNums');
+if(elMax)elMax.innerHTML=maxTxt||'--';
+
+// 最小赔付 TOP4（过滤掉0的）
+var minItems=payItems.filter(function(it){return it.pay>0;});
+var min4=minItems.slice(-4).reverse();
+var minTxt=min4.map(fmt).join('<br>');
+var elMin=document.getElementById('minPayNums');
+if(elMin)elMin.innerHTML=minTxt||'--';
+
+// 最接近投注总计的4个
+var elMid=document.getElementById('midPayNums');
+if(elMid){
+if(payItems.length>0){
+var diffs=payItems.map(function(it){return {n:it.n,sx:it.sx,bose:it.bose,pay:it.pay,diff:Math.abs(it.pay-dt)};});
+diffs.sort(function(a,b){return a.diff-b.diff;});
+var mid4=diffs.slice(0,4);
+var midTxt=mid4.map(fmt).join('<br>');
+elMid.innerHTML=midTxt;
+}else{elMid.textContent='--';}
+}
+
+var pp=0,up=0,pa=0;
+for(var p=0;p<pans.length;p++){
+if(pans[p].paid){pp++;pa+=calcPanTotal(pans[p]);}
+else up++;
+}
+var el1=document.getElementById('statPanCount');if(el1)el1.textContent=pans.length;
+var el2=document.getElementById('statPaid');if(el2)el2.textContent=pp;
+var el3=document.getElementById('statUnpaid');if(el3)el3.textContent=up;
+var el4=document.getElementById('statPaidAmount');if(el4)el4.textContent=pa.toLocaleString();
+
+updateBadge('badge0',countItems('num'));
+updateBadge('badge1',countItems('sx'));
+updateBadge('badge2',countItems('pingma'));
+updateBadge('badge3',countItems('bose'));
+updateBadge('badge4',countItems('wx'));
+updateBadge('badge5',countItems('daxiao'));
+updateBadge('badge6',countItems('danshuang'));
+renderTiger();
+}
+
+function calcMergedDimTotal(dim){
+var t=calcDimTotal(dim);
+for(var k in extraData[dim])t+=extraData[dim][k]||0;
+return t;
+}
+
+function getMergedData(dim){
+var merged={};
+var pans=frontData.pans||[];
+for(var p=0;p<pans.length;p++){
+var d=pans[p].data||{};
+var m=d[dim]||{};
+for(var k in m)merged[k]=(merged[k]||0)+(m[k]||0);
+}
+for(var k in extraData[dim])merged[k]=(merged[k]||0)+(extraData[dim][k]||0);
+return merged;
+}
+
+function renderTiger(){
+var grid=document.getElementById('tigerGrid');
+if(!grid)return;
+
+var mergedNum=getMergedData('num');
+var mergedPingma=getMergedData('pingma');
+var mergedSx=getMergedData('sx');
+var mergedBose=getMergedData('bose');
+var mergedWx=getMergedData('wx');
+var mergedDaxiao=getMergedData('daxiao');
+var mergedDanshuang=getMergedData('danshuang');
+
+var shuiNum=(shuiConfig.num||0)/100;
+var shuiPm=(shuiConfig.pingma||0)/100;
+var shuiSx=(shuiConfig.sx||0)/100;
+var shuiBose=(shuiConfig.bose||0)/100;
+var shuiWx=(shuiConfig.wx||0)/100;
+var shuiDx=(shuiConfig.daxiao||0)/100;
+var shuiDs=(shuiConfig.danshuang||0)/100;
+
+// 找出平码投注最高的号码，不足6个时从1-49按顺序补足
+var pmItems=[];
+var usedNums={};
+for(var i=1;i<=49;i++){
+var amt=mergedPingma[i]||0;
+if(amt>0){
+pmItems.push({n:i,amt:amt});
+usedNums[i]=true;
+}
+}
+pmItems.sort(function(a,b){return b.amt-a.amt;});
+
+// 补足到6个：从1-49按顺序取未使用的号码
+for(var i=1;i<=49&&pmItems.length<6;i++){
+if(!usedNums[i]){
+pmItems.push({n:i,amt:0});
+usedNums[i]=true;
+}
+}
+
+var pmNums=[];
+for(var i=0;i<pmItems.length&&i<6;i++)pmNums.push(pmItems[i].n);
+
+var resultItems=[];
+for(var n=1;n<=49;n++){
+var s=gs(n),w=gw(n);
+var c=gc(n);
+var isBig=n>=25;
+var isOdd=n%2===1;
+
+var numAmt=mergedNum[n]||0;
+var numOdds=(n===1||n===13||n===25||n===37||n===49)?oddsConfig.numLine1:oddsConfig.numOther;
+var numPay=Math.round(numAmt*(numOdds||1.0));
+var numNet=Math.round(numAmt*(1-shuiNum));
+
+var pmPay=0,pmNet=0;
+for(var i=0;i<pmNums.length;i++){
+var pmN=pmNums[i];
+if(pmN>0){
+var pmAmt=mergedPingma[pmN]||0;
+pmPay+=Math.round(pmAmt*(oddsConfig.pingma||1.0));
+pmNet+=Math.round(pmAmt*(1-shuiPm));
+}
+}
+
+var sxAmt=mergedSx[s.name]||0;
+var sxOdds=(s.name==='马')?oddsConfig.sxLine1:oddsConfig.sxOther;
+var sxPay=Math.round(sxAmt*(sxOdds||1.0));
+var sxNet=Math.round(sxAmt*(1-shuiSx));
+
+var boseName=c==='red'?'红波':c==='blue'?'蓝波':'绿波';
+var boseAmt=mergedBose[boseName]||0;
+var bosePay=Math.round(boseAmt*(oddsConfig.bose||1.0));
+var boseNet=Math.round(boseAmt*(1-shuiBose));
+
+var wxAmt=mergedWx[w.name]||0;
+var wxPay=Math.round(wxAmt*(oddsConfig.wx||1.0));
+var wxNet=Math.round(wxAmt*(1-shuiWx));
+
+var dxName=isBig?'大':'小';
+var dxAmt=mergedDaxiao[dxName]||0;
+var dxPay=Math.round(dxAmt*(oddsConfig.daxiao||1.0));
+var dxNet=Math.round(dxAmt*(1-shuiDx));
+
+var dsName=isOdd?'单':'双';
+var dsAmt=mergedDanshuang[dsName]||0;
+var dsPay=Math.round(dsAmt*(oddsConfig.danshuang||1.0));
+var dsNet=Math.round(dsAmt*(1-shuiDs));
+
+var totalPay=numPay+pmPay+sxPay+bosePay+wxPay+dxPay+dsPay;
+var totalNet=numNet+pmNet+sxNet+boseNet+wxNet+dxNet+dsNet;
+var profit=totalNet-totalPay;
+
+resultItems.push({
+n:n,pmNums:pmNums,totalPay:totalPay,totalNet:totalNet,profit:profit,
+sx:s.name,wx:w.name,bose:boseName,dx:dxName,ds:dsName
+});
+}
+
+resultItems.sort(function(a,b){return a.profit-b.profit;});
+var topItems=resultItems.slice(0,20);
+
+if(topItems.length===0){grid.innerHTML='<div class="tiger-empty">暂无投注数据</div>';return;}
+
+var h='';
+for(var i=0;i<topItems.length;i++){
+var it=topItems[i];
+var rankIcon=i===0?'🥇':i===1?'🥈':i===2?'🥉':'🏅';
+var profitColor=it.profit>=0?'#00ff88':'#ff4444';
+var profitIcon=it.profit>=0?'📈':'📉';
+
+var pmTxt='';
+for(var j=0;j<it.pmNums.length;j++){
+if(j>0)pmTxt+=', ';
+pmTxt+=p2(it.pmNums[j]);
+}
+
+h+='<div class="tiger-item">';
+h+='<div class="tiger-dim">'+rankIcon+' 最合适 第'+(i+1)+'名</div>';
+h+='<div class="tiger-name" style="font-size:18px">正码: '+pmTxt+' | 特码: '+getBoseEmoji(it.n)+' '+p2(it.n)+'号</div>';
+h+='<div class="tiger-name" style="font-size:14px;color:#aaa">'+it.sx+' · '+it.wx+' · '+it.bose+' · '+it.dx+' · '+it.ds+'</div>';
+h+='<div class="tiger-amount" style="font-size:20px">💸 总赔付 '+it.totalPay.toLocaleString()+' 元</div>';
+h+='<div class="tiger-risk">';
+h+='<span style="color:#ffd700">📥 实收 '+it.totalNet.toLocaleString()+' 元</span> | ';
+h+='<span style="color:'+profitColor+'">'+profitIcon+' 净盈利 '+it.profit.toLocaleString()+' 元</span>';
+h+='</div>';
+h+='</div>';
+}
+grid.innerHTML=h;
+}
+
+function doReview(){
+var results=[];
+for(var i=1;i<=7;i++){
+var el=document.getElementById('rv'+i);
+var v=el?parseInt(el.value):0;
+if(v>=1&&v<=49)results.push(v);
+}
+var area=document.getElementById('reviewResultArea');
+if(!area)return;
+if(results.length===0){area.innerHTML='';showStatus('⚠️ 请输入开奖号码');return;}
+if(results.length<7){area.innerHTML='';showStatus('⚠️ 请输入完整的7个开奖号码（6正码+1特码）');return;}
+
+var tm=results[6];
+var tmInfo={num:tm,color:gc(tm),sx:gs(tm).name,wx:gw(tm).name,isBig:tm>=25,isOdd:tm%2===1};
+var pmNums=results.slice(0,6);
+
+var mergedNum=getMergedData('num');
+var mergedSx=getMergedData('sx');
+var mergedPingma=getMergedData('pingma');
+var mergedBose=getMergedData('bose');
+var mergedWx=getMergedData('wx');
+var mergedDaxiao=getMergedData('daxiao');
+var mergedDanshuang=getMergedData('danshuang');
+
+// 获取抽水比例
+var shuiNum=(shuiConfig.num||0)/100;
+var shuiPm=(shuiConfig.pingma||0)/100;
+var shuiSx=(shuiConfig.sx||0)/100;
+var shuiBose=(shuiConfig.bose||0)/100;
+var shuiWx=(shuiConfig.wx||0)/100;
+var shuiDx=(shuiConfig.daxiao||0)/100;
+var shuiDs=(shuiConfig.danshuang||0)/100;
+
+// 各维度投注金额
+var nt=mergedNum[tm]||0;
+var st=mergedSx[tmInfo.sx]||0;
+var pt=0;
+for(var i=0;i<pmNums.length;i++)pt+=mergedPingma[pmNums[i]]||0;
+var boseName=tmInfo.color==='red'?'红波':tmInfo.color==='blue'?'蓝波':'绿波';
+var bt=mergedBose[boseName]||0;
+var wt=mergedWx[tmInfo.wx]||0;
+var dxt=mergedDaxiao[tmInfo.isBig?'大':'小']||0;
+var dst=mergedDanshuang[tmInfo.isOdd?'单':'双']||0;
+
+// 各维度赔率
+var numOdds=(tm===1||tm===13||tm===25||tm===37||tm===49)?oddsConfig.numLine1:oddsConfig.numOther;
+var sxOdds=(tmInfo.sx==='马')?oddsConfig.sxLine1:oddsConfig.sxOther;
+var pmOdds=oddsConfig.pingma;
+var boseOdds=oddsConfig.bose;
+var wxOdds=oddsConfig.wx;
+var dxOdds=oddsConfig.daxiao;
+var dsOdds=oddsConfig.danshuang;
+
+// 各维度赔付 = 投注额 × 赔率
+var numPay=Math.round(nt*numOdds);
+var sxPay=Math.round(st*sxOdds);
+var pmPay=Math.round(pt*pmOdds);
+var bosePay=Math.round(bt*boseOdds);
+var wxPay=Math.round(wt*wxOdds);
+var dxPay=Math.round(dxt*dxOdds);
+var dsPay=Math.round(dst*dsOdds);
+
+// 各维度抽水后实收 = 投注额 × (1-抽水比例)
+var numNet=Math.round(nt*(1-shuiNum));
+var sxNet=Math.round(st*(1-shuiSx));
+var pmNet=Math.round(pt*(1-shuiPm));
+var boseNet=Math.round(bt*(1-shuiBose));
+var wxNet=Math.round(wt*(1-shuiWx));
+var dxNet=Math.round(dxt*(1-shuiDx));
+var dsNet=Math.round(dst*(1-shuiDs));
+
+// 总计
+var totalPay=numPay+sxPay+pmPay+bosePay+wxPay+dxPay+dsPay;
+var totalNet=numNet+sxNet+pmNet+boseNet+wxNet+dxNet+dsNet;
+var totalBet=nt+st+pt+bt+wt+dxt+dst;
+var profit=totalNet-totalPay;
+
+// 生成结果HTML
+var h='<div class="review-result-box">';
+
+// 标题
+h+='<div class="result-title">📊 第'+p2(tm)+'期开奖结果 · '+getBoseEmoji(tm)+' '+tmInfo.sx+' '+tmInfo.wx+' | '+(tmInfo.isBig?'大':'小')+' | '+(tmInfo.isOdd?'单':'双')+'</div>';
+
+// 各维度明细表格
+h+='<table style="width:100%;border-collapse:collapse;color:#fff;font-size:13px;margin:10px 0">';
+h+='<thead><tr style="background:rgba(255,215,0,0.2)"><th style="padding:8px;border:1px solid rgba(255,215,0,0.3)">维度</th><th style="padding:8px;border:1px solid rgba(255,215,0,0.3)">投注金额</th><th style="padding:8px;border:1px solid rgba(255,215,0,0.3)">赔率</th><th style="padding:8px;border:1px solid rgba(255,215,0,0.3)">抽水比例</th><th style="padding:8px;border:1px solid rgba(255,215,0,0.3)">实收金额</th><th style="padding:8px;border:1px solid rgba(255,215,0,0.3)">应付金额</th></tr></thead>';
+h+='<tbody>';
+
+var dimRows=[
+{dim:'🔢 特码',val:nt,odds:numOdds.toFixed(1),shui:shuiNum*100,net:numNet,pay:numPay},
+{dim:'🎯 平码',val:pt,odds:pmOdds.toFixed(1),shui:shuiPm*100,net:pmNet,pay:pmPay},
+{dim:'🐭 生肖',val:st,odds:sxOdds.toFixed(1),shui:shuiSx*100,net:sxNet,pay:sxPay},
+{dim:'🔴 波色',val:bt,odds:boseOdds.toFixed(1),shui:shuiBose*100,net:boseNet,pay:bosePay},
+{dim:'☯️ 五行',val:wt,odds:wxOdds.toFixed(1),shui:shuiWx*100,net:wxNet,pay:wxPay},
+{dim:'📏 大小',val:dxt,odds:dxOdds.toFixed(1),shui:shuiDx*100,net:dxNet,pay:dxPay},
+{dim:'⚖️ 单双',val:dst,odds:dsOdds.toFixed(1),shui:shuiDs*100,net:dsNet,pay:dsPay}
+];
+
+for(var i=0;i<dimRows.length;i++){
+var dr=dimRows[i];
+var bg=i%2===0?'rgba(0,0,0,0.2)':'rgba(0,0,0,0.4)';
+var payColor=dr.pay>0?'#ff4444':'#888';
+h+='<tr style="background:'+bg+'">';
+h+='<td style="padding:8px;border:1px solid rgba(255,255,255,0.1);text-align:center">'+dr.dim+'</td>';
+h+='<td style="padding:8px;border:1px solid rgba(255,255,255,0.1);text-align:right">'+dr.val.toLocaleString()+' 元</td>';
+h+='<td style="padding:8px;border:1px solid rgba(255,255,255,0.1);text-align:center">'+dr.odds+'x</td>';
+h+='<td style="padding:8px;border:1px solid rgba(255,255,255,0.1);text-align:center">'+dr.shui.toFixed(1)+'%</td>';
+h+='<td style="padding:8px;border:1px solid rgba(255,255,255,0.1);text-align:right;color:#00ff88">'+dr.net.toLocaleString()+' 元</td>';
+h+='<td style="padding:8px;border:1px solid rgba(255,255,255,0.1);text-align:right;color:'+payColor+'">'+dr.pay.toLocaleString()+' 元</td>';
+h+='</tr>';
+}
+
+// 合计行
+h+='<tr style="background:rgba(255,215,0,0.15);font-weight:bold">';
+h+='<td style="padding:8px;border:1px solid rgba(255,215,0,0.3);text-align:center;color:#ffd700">合计</td>';
+h+='<td style="padding:8px;border:1px solid rgba(255,215,0,0.3);text-align:right;color:#ffd700">'+totalBet.toLocaleString()+' 元</td>';
+h+='<td style="padding:8px;border:1px solid rgba(255,215,0,0.3)">-</td>';
+h+='<td style="padding:8px;border:1px solid rgba(255,215,0,0.3)">-</td>';
+h+='<td style="padding:8px;border:1px solid rgba(255,215,0,0.3);text-align:right;color:#00ff88">'+totalNet.toLocaleString()+' 元</td>';
+h+='<td style="padding:8px;border:1px solid rgba(255,215,0,0.3);text-align:right;color:#ff4444">'+totalPay.toLocaleString()+' 元</td>';
+h+='</tr>';
+
+h+='</tbody></table>';
+
+// 最终结果
+h+='<div class="review-grand">';
+h+='<div class="rg-label">💰 总投注 '+totalBet.toLocaleString()+' 元 | 抽水后实收 '+totalNet.toLocaleString()+' 元 | 总赔付 '+totalPay.toLocaleString()+' 元</div>';
+if(profit>=0){
+h+='<div class="rg-value rg-profit">📈 净盈利 '+profit.toLocaleString()+' 元</div>';
+}else{
+h+='<div class="rg-value rg-loss">📉 净亏损 '+Math.abs(profit).toLocaleString()+' 元</div>';
+}
+h+='</div>';
+
+h+='</div>';
+
+area.innerHTML=h;
+showStatus('✅ 计算完成 · 第'+p2(tm)+'期赔付结果已生成');
+}
+
+function getBoseEmoji(n){
+if(RED.indexOf(n)>=0)return '🔴';
+if(BLUE.indexOf(n)>=0)return '🔵';
+return '🟢';
+}
+
+function clearReview(){
+for(var i=1;i<=7;i++){var el=document.getElementById('rv'+i);if(el)el.value='';}
+var area=document.getElementById('reviewResultArea');
+if(area)area.innerHTML='';
+showStatus('🗑️ 复盘结果已清空');
+}
+
+function countItems(dim){
+var items={};
+var pans=frontData.pans||[];
+for(var p=0;p<pans.length;p++){
+var d=pans[p].data||{};
+var m=d[dim]||{};
+for(var k in m)if(m[k]>0)items[k]=true;
+}
+var c=0;
+for(var k in items)c++;
+return c;
+}
+
+function updateBadge(id,c){
+var el=document.getElementById(id);
+if(!el)return;
+if(c>0){el.textContent=c;el.style.display='inline-block';}
+else el.style.display='none';
+}
+
+function updateInfo(){
+var el1=document.getElementById('frontNameDisplay');
+if(el1)el1.textContent=frontData.name||'--';
+var el2=document.getElementById('panTotalCount');
+if(el2)el2.textContent=(frontData.pans||[]).length;
+var now=new Date();
+var el3=document.getElementById('lastUpdate');
+if(el3)el3.textContent=now.getFullYear()+'-'+p2(now.getMonth()+1)+'-'+p2(now.getDate())+' '+p2(now.getHours())+':'+p2(now.getMinutes());
+}
+
+function renderDetail(){
+var tb=document.getElementById('detailBody');
+var em=document.getElementById('detailEmpty');
+var items=[];
+
+var merged={};
+var pans=frontData.pans||[];
+for(var p=0;p<pans.length;p++){
+var d=pans[p].data||{};
+var m=d[tabs[tab]]||{};
+for(var k in m)merged[k]=(merged[k]||0)+(m[k]||0);
+}
+
+if(tab===0){
+// 特码：全部49个号码
+for(var i=1;i<=49;i++){
+var s=gs(i),w=gw(i);
+var amt=merged[i]||0;
+var o=(i===1||i===13||i===25||i===37||i===49)?oddsConfig.numLine1:oddsConfig.numOther;
+var pay=Math.round(amt*(o||1.0));
+items.push({r:0,n:i,a:amt,c:gc(i),sx:s.name,wx:w.name,o:(o||1.0).toFixed(1),pay:pay});
+}
+items.sort(function(a,b){return b.pay-a.pay;});
+for(var i=0;i<items.length;i++)items[i].r=i+1;
+var totalA=items.reduce(function(s,it){return s+it.a;},0);
+var totalP=items.reduce(function(s,it){return s+it.pay;},0);
+var elCount=document.getElementById('detailCount');if(elCount)elCount.textContent=items.length;
+var elTotal=document.getElementById('detailTotal');if(elTotal)elTotal.textContent=totalA.toLocaleString();
+if(em)em.style.display='none';
+if(tb){
+var h='';
+for(var i=0;i<items.length;i++){
+var it=items[i];
+var cs=it.c==='red'?'color:#ff4444':it.c==='blue'?'color:#4488ff':'color:#44ff44';
+h+='<tr style="background:'+(it.r%2===1?'rgba(0,0,0,0.2)':'rgba(0,0,0,0.4)')+'">';
+h+='<td style="color:#ffd700;font-weight:bold;">'+it.r+'</td>';
+h+='<td style="font-weight:bold;'+cs+'">'+p2(it.n)+'</td>';
+h+='<td>'+(it.c==='red'?'🔴红':it.c==='blue'?'🔵蓝':'🟢绿')+'</td>';
+h+='<td>'+it.sx+'</td>';
+h+='<td>'+it.wx+'</td>';
+h+='<td class="amount">'+(it.a>0?it.a.toLocaleString():'-')+'</td>';
+h+='<td style="color:#aaa">'+it.o+'</td>';
+h+='<td class="amount" style="color:#00ff88">'+(it.pay>0?it.pay.toLocaleString():'-')+'</td></tr>';
+}
+tb.innerHTML=h;
+}
+}else if(tab===1){
+// 生肖：全部12个生肖
+for(var i=0;i<SX.length;i++){
+var amt=merged[SX[i].name]||0;
+var o=(SX[i].name==='马')?oddsConfig.sxLine1:oddsConfig.sxOther;
+var pay=Math.round(amt*(o||1.0));
+items.push({r:0,name:SX[i].name,icon:SX[i].icon,nums:SX[i].nums.join(','),a:amt,o:(o||1.0).toFixed(1),pay:pay});
+}
+items.sort(function(a,b){return b.pay-a.pay;});
+for(var i=0;i<items.length;i++)items[i].r=i+1;
+var totalA=items.reduce(function(s,it){return s+it.a;},0);
+var totalP=items.reduce(function(s,it){return s+it.pay;},0);
+var elCount=document.getElementById('detailCount');if(elCount)elCount.textContent=items.length;
+var elTotal=document.getElementById('detailTotal');if(elTotal)elTotal.textContent=totalA.toLocaleString();
+if(em)em.style.display='none';
+if(tb){
+var h='';
+for(var i=0;i<items.length;i++){
+var it=items[i];
+h+='<tr style="background:'+(it.r%2===1?'rgba(0,0,0,0.2)':'rgba(0,0,0,0.4)')+'">';
+h+='<td style="color:#ffd700;font-weight:bold;">'+it.r+'</td>';
+h+='<td>'+it.icon+' '+it.name+'</td>';
+h+='<td style="font-size:11px;color:#888;">'+it.nums+'</td>';
+h+='<td class="amount">'+(it.a>0?it.a.toLocaleString():'-')+'</td>';
+h+='<td style="color:#aaa">'+it.o+'</td>';
+h+='<td class="amount" style="color:#00ff88">'+(it.pay>0?it.pay.toLocaleString():'-')+'</td></tr>';
+}
+tb.innerHTML=h;
+}
+}else if(tab===2){
+// 平码：全部49个号码
+for(var i=1;i<=49;i++){
+var s=gs(i),w=gw(i);
+var amt=merged[i]||0;
+var o=oddsConfig.pingma;
+var pay=Math.round(amt*(o||1.0));
+items.push({r:0,n:i,a:amt,c:gc(i),sx:s.name,wx:w.name,o:(o||1.0).toFixed(1),pay:pay});
+}
+items.sort(function(a,b){return b.pay-a.pay;});
+for(var i=0;i<items.length;i++)items[i].r=i+1;
+var totalA=items.reduce(function(s,it){return s+it.a;},0);
+var totalP=items.reduce(function(s,it){return s+it.pay;},0);
+var elCount=document.getElementById('detailCount');if(elCount)elCount.textContent=items.length;
+var elTotal=document.getElementById('detailTotal');if(elTotal)elTotal.textContent=totalA.toLocaleString();
+if(em)em.style.display='none';
+if(tb){
+var h='';
+for(var i=0;i<items.length;i++){
+var it=items[i];
+var cs=it.c==='red'?'color:#ff4444':it.c==='blue'?'color:#4488ff':'color:#44ff44';
+h+='<tr style="background:'+(it.r%2===1?'rgba(0,0,0,0.2)':'rgba(0,0,0,0.4)')+'">';
+h+='<td style="color:#ffd700;font-weight:bold;">'+it.r+'</td>';
+h+='<td style="font-weight:bold;'+cs+'">'+p2(it.n)+'</td>';
+h+='<td>'+(it.c==='red'?'🔴红':it.c==='blue'?'🔵蓝':'🟢绿')+'</td>';
+h+='<td>'+it.sx+'</td>';
+h+='<td>'+it.wx+'</td>';
+h+='<td class="amount">'+(it.a>0?it.a.toLocaleString():'-')+'</td>';
+h+='<td style="color:#aaa">'+it.o+'</td>';
+h+='<td class="amount" style="color:#00ff88">'+(it.pay>0?it.pay.toLocaleString():'-')+'</td></tr>';
+}
+tb.innerHTML=h;
+}
+}else if(tab===3){
+// 红蓝绿波：全部3个波色
+for(var i=0;i<BOSE.length;i++){
+var amt=merged[BOSE[i].name]||0;
+var o=oddsConfig.bose;
+var pay=Math.round(amt*(o||1.0));
+items.push({r:0,name:BOSE[i].name,icon:BOSE[i].icon,nums:BOSE[i].nums.join(','),a:amt,o:(o||1.0).toFixed(1),pay:pay});
+}
+items.sort(function(a,b){return b.pay-a.pay;});
+for(var i=0;i<items.length;i++)items[i].r=i+1;
+var totalA=items.reduce(function(s,it){return s+it.a;},0);
+var totalP=items.reduce(function(s,it){return s+it.pay;},0);
+var elCount=document.getElementById('detailCount');if(elCount)elCount.textContent=items.length;
+var elTotal=document.getElementById('detailTotal');if(elTotal)elTotal.textContent=totalA.toLocaleString();
+if(em)em.style.display='none';
+if(tb){
+var h='';
+for(var i=0;i<items.length;i++){
+var it=items[i];
+h+='<tr style="background:'+(it.r%2===1?'rgba(0,0,0,0.2)':'rgba(0,0,0,0.4)')+'">';
+h+='<td style="color:#ffd700;font-weight:bold;">'+it.r+'</td>';
+h+='<td>'+it.icon+' '+it.name+'</td>';
+h+='<td style="font-size:11px;color:#888;">'+it.nums+'</td>';
+h+='<td class="amount">'+(it.a>0?it.a.toLocaleString():'-')+'</td>';
+h+='<td style="color:#aaa">'+it.o+'</td>';
+h+='<td class="amount" style="color:#00ff88">'+(it.pay>0?it.pay.toLocaleString():'-')+'</td></tr>';
+}
+tb.innerHTML=h;
+}
+}else if(tab===4){
+// 五行：全部5个五行
+for(var i=0;i<WX.length;i++){
+var amt=merged[WX[i].name]||0;
+var o=oddsConfig.wx;
+var pay=Math.round(amt*(o||1.0));
+items.push({r:0,name:WX[i].name,icon:WX[i].icon,nums:WX[i].nums.join(','),a:amt,o:(o||1.0).toFixed(1),pay:pay});
+}
+items.sort(function(a,b){return b.pay-a.pay;});
+for(var i=0;i<items.length;i++)items[i].r=i+1;
+var totalA=items.reduce(function(s,it){return s+it.a;},0);
+var totalP=items.reduce(function(s,it){return s+it.pay;},0);
+var elCount=document.getElementById('detailCount');if(elCount)elCount.textContent=items.length;
+var elTotal=document.getElementById('detailTotal');if(elTotal)elTotal.textContent=totalA.toLocaleString();
+if(em)em.style.display='none';
+if(tb){
+var h='';
+for(var i=0;i<items.length;i++){
+var it=items[i];
+h+='<tr style="background:'+(it.r%2===1?'rgba(0,0,0,0.2)':'rgba(0,0,0,0.4)')+'">';
+h+='<td style="color:#ffd700;font-weight:bold;">'+it.r+'</td>';
+h+='<td>'+it.icon+' '+it.name+'</td>';
+h+='<td style="font-size:11px;color:#888;">'+it.nums+'</td>';
+h+='<td class="amount">'+(it.a>0?it.a.toLocaleString():'-')+'</td>';
+h+='<td style="color:#aaa">'+it.o+'</td>';
+h+='<td class="amount" style="color:#00ff88">'+(it.pay>0?it.pay.toLocaleString():'-')+'</td></tr>';
+}
+tb.innerHTML=h;
+}
+}else if(tab===5){
+// 大小：全部2个大小
+for(var i=0;i<DX_CONFIG.length;i++){
+var amt=merged[DX_CONFIG[i].name]||0;
+var o=oddsConfig.daxiao;
+var pay=Math.round(amt*(o||1.0));
+items.push({r:0,name:DX_CONFIG[i].name,icon:DX_CONFIG[i].icon,nums:DX_CONFIG[i].nums.join(','),a:amt,o:(o||1.0).toFixed(1),pay:pay});
+}
+items.sort(function(a,b){return b.pay-a.pay;});
+for(var i=0;i<items.length;i++)items[i].r=i+1;
+var totalA=items.reduce(function(s,it){return s+it.a;},0);
+var totalP=items.reduce(function(s,it){return s+it.pay;},0);
+var elCount=document.getElementById('detailCount');if(elCount)elCount.textContent=items.length;
+var elTotal=document.getElementById('detailTotal');if(elTotal)elTotal.textContent=totalA.toLocaleString();
+if(em)em.style.display='none';
+if(tb){
+var h='';
+for(var i=0;i<items.length;i++){
+var it=items[i];
+h+='<tr style="background:'+(it.r%2===1?'rgba(0,0,0,0.2)':'rgba(0,0,0,0.4)')+'">';
+h+='<td style="color:#ffd700;font-weight:bold;">'+it.r+'</td>';
+h+='<td style="font-weight:bold;color:#ffd700;">'+it.icon+' '+it.name+'</td>';
+h+='<td style="font-size:11px;color:#888;">'+it.nums+'</td>';
+h+='<td class="amount">'+(it.a>0?it.a.toLocaleString():'-')+'</td>';
+h+='<td style="color:#aaa">'+it.o+'</td>';
+h+='<td class="amount" style="color:#00ff88">'+(it.pay>0?it.pay.toLocaleString():'-')+'</td></tr>';
+}
+tb.innerHTML=h;
+}
+}else{
+// 单双：全部2个单双
+for(var i=0;i<DS_CONFIG.length;i++){
+var amt=merged[DS_CONFIG[i].name]||0;
+var o=oddsConfig.danshuang;
+var pay=Math.round(amt*(o||1.0));
+items.push({r:0,name:DS_CONFIG[i].name,icon:DS_CONFIG[i].icon,nums:DS_CONFIG[i].nums.join(','),a:amt,o:(o||1.0).toFixed(1),pay:pay});
+}
+items.sort(function(a,b){return b.pay-a.pay;});
+for(var i=0;i<items.length;i++)items[i].r=i+1;
+var totalA=items.reduce(function(s,it){return s+it.a;},0);
+var totalP=items.reduce(function(s,it){return s+it.pay;},0);
+var elCount=document.getElementById('detailCount');if(elCount)elCount.textContent=items.length;
+var elTotal=document.getElementById('detailTotal');if(elTotal)elTotal.textContent=totalA.toLocaleString();
+if(em)em.style.display='none';
+if(tb){
+var h='';
+for(var i=0;i<items.length;i++){
+var it=items[i];
+h+='<tr style="background:'+(it.r%2===1?'rgba(0,0,0,0.2)':'rgba(0,0,0,0.4)')+'">';
+h+='<td style="color:#ffd700;font-weight:bold;">'+it.r+'</td>';
+h+='<td style="font-weight:bold;color:#ffd700;">'+it.icon+' '+it.name+'</td>';
+h+='<td style="font-size:11px;color:#888;">'+it.nums+'</td>';
+h+='<td class="amount">'+(it.a>0?it.a.toLocaleString():'-')+'</td>';
+h+='<td style="color:#aaa">'+it.o+'</td>';
+h+='<td class="amount" style="color:#00ff88">'+(it.pay>0?it.pay.toLocaleString():'-')+'</td></tr>';
+}
+tb.innerHTML=h;
+}
+}
+}
+
+function renderOddsConfig(){
+var box=document.getElementById('oddsConfigRow');
+if(!box)return;
+var h='';
+if(tab===0){
+h+='<div class="odds-item"><label>🎯 一号线赔率</label><input type="number" step="0.1" id="oddsNumLine1" value="'+oddsConfig.numLine1+'" onchange="updateOdds(\'numLine1\',this.value)"></div>';
+h+='<div class="odds-item"><label>🔢 其他特码赔率</label><input type="number" step="0.1" id="oddsNumOther" value="'+oddsConfig.numOther+'" onchange="updateOdds(\'numOther\',this.value)"></div>';
+}else if(tab===1){
+h+='<div class="odds-item"><label>🐴 马赔率</label><input type="number" step="0.1" id="oddsSxLine1" value="'+oddsConfig.sxLine1+'" onchange="updateOdds(\'sxLine1\',this.value)"></div>';
+h+='<div class="odds-item"><label>🐭 其他生肖赔率</label><input type="number" step="0.1" id="oddsSxOther" value="'+oddsConfig.sxOther+'" onchange="updateOdds(\'sxOther\',this.value)"></div>';
+}else if(tab===2){
+h+='<div class="odds-item"><label>🎯 平码赔率</label><input type="number" step="0.1" id="oddsPingma" value="'+oddsConfig.pingma+'" onchange="updateOdds(\'pingma\',this.value)"></div>';
+}else if(tab===3){
+h+='<div class="odds-item"><label>🔴 波色赔率</label><input type="number" step="0.1" id="oddsBose" value="'+oddsConfig.bose+'" onchange="updateOdds(\'bose\',this.value)"></div>';
+}else if(tab===4){
+h+='<div class="odds-item"><label>☯️ 五行赔率</label><input type="number" step="0.1" id="oddsWx" value="'+oddsConfig.wx+'" onchange="updateOdds(\'wx\',this.value)"></div>';
+}else if(tab===5){
+h+='<div class="odds-item"><label>📏 大小赔率</label><input type="number" step="0.1" id="oddsDaxiao" value="'+oddsConfig.daxiao+'" onchange="updateOdds(\'daxiao\',this.value)"></div>';
+}else{
+h+='<div class="odds-item"><label>⚖️ 单双赔率</label><input type="number" step="0.1" id="oddsDanshuang" value="'+oddsConfig.danshuang+'" onchange="updateOdds(\'danshuang\',this.value)"></div>';
+}
+// 抽水比例设置（按维度单独）
+var shuiKey=tabs[tab];
+var shuiVal=shuiConfig[shuiKey]||0;
+h+='<div class="odds-item"><label>🚰 抽水比例(%)</label><input type="number" step="0.1" id="shuiPercent" value="'+shuiVal+'" onchange="updateShui(\''+shuiKey+'\',this.value)"></div>';
+box.innerHTML=h;
+}
+
+function updateOdds(key,val){
+var v=parseFloat(val);
+if(isNaN(v)||v<0)v=1.0;
+oddsConfig[key]=v;
+safeStorageSet('wuxingcai_odds_config',JSON.stringify(oddsConfig));
+renderDetail();
+updateStats();
+}
+
+function updateShui(key,val){
+var v=parseFloat(val);
+if(isNaN(v)||v<0)v=0.0;
+if(v>100)v=100;
+shuiConfig[key]=v;
+safeStorageSet('wuxingcai_shui_config',JSON.stringify(shuiConfig));
+updateStats();
+}
+
+function goFront(){showStatus('↩️ 返回收款前台');}
+
+function exportData(){
+var csv='香港五行彩总台报表\n';
+csv+='生成时间,'+new Date().toLocaleString()+'\n\n';
+
+csv+='【特码维度】\n号码,波色,生肖,五行,投注金额,赔率,应付金额\n';
+var nm={};
+var pans=frontData.pans||[];
+for(var p=0;p<pans.length;p++){
+var d=pans[p].data||{};
+for(var k in d.num)nm[k]=(nm[k]||0)+(d.num[k]||0);
+}
+var ni=[];
+for(var i=1;i<=49;i++){
+var s=gs(i),w=gw(i);
+var amt=nm[i]||0;
+var o=(i===1||i===13||i===25||i===37||i===49)?oddsConfig.numLine1:oddsConfig.numOther;
+var pay=Math.round(amt*(o||1.0));
+ni.push({n:i,a:amt,c:gc(i)==='red'?'红':gc(i)==='blue'?'蓝':'绿',sx:s.name,wx:w.name,o:(o||1.0).toFixed(1),pay:pay});
+}
+ni.sort(function(a,b){return b.pay-a.pay;});
+for(var i=0;i<ni.length;i++){var it=ni[i];csv+=p2(it.n)+','+it.c+','+it.sx+','+it.wx+','+it.a+','+it.o+','+it.pay+'\n';}
+var nt=0,np=0;for(var i=0;i<ni.length;i++){nt+=ni[i].a;np+=ni[i].pay;}
+csv+='特码合计,'+nt+',,,'+nt+',,'+np+'\n\n';
+
+csv+='【生肖维度】\n生肖,包含号码,投注金额,赔率,应付金额\n';
+var sm={};
+for(var p=0;p<pans.length;p++){
+var d=pans[p].data||{};
+for(var k in d.sx)sm[k]=(sm[k]||0)+(d.sx[k]||0);
+}
+var si=[];
+for(var i=0;i<SX.length;i++){
+var amt=sm[SX[i].name]||0;
+var o=(SX[i].name==='马')?oddsConfig.sxLine1:oddsConfig.sxOther;
+var pay=Math.round(amt*(o||1.0));
+si.push({name:SX[i].name,nums:SX[i].nums.join(';'),a:amt,o:(o||1.0).toFixed(1),pay:pay});
+}
+si.sort(function(a,b){return b.pay-a.pay;});
+for(var i=0;i<si.length;i++){var it=si[i];csv+=it.name+','+it.nums+','+it.a+','+it.o+','+it.pay+'\n';}
+var st=0,sp=0;for(var i=0;i<si.length;i++){st+=si[i].a;sp+=si[i].pay;}
+csv+='生肖合计,'+st+',,,'+sp+'\n\n';
+
+csv+='【平码维度】\n平码,波色,生肖,五行,投注金额,赔率,应付金额\n';
+var pm={};
+for(var p=0;p<pans.length;p++){
+var d=pans[p].data||{};
+for(var k in d.pingma)pm[k]=(pm[k]||0)+(d.pingma[k]||0);
+}
+var pi=[];
+for(var i=1;i<=49;i++){
+var s=gs(i),w=gw(i);
+var amt=pm[i]||0;
+var o=oddsConfig.pingma;
+var pay=Math.round(amt*(o||1.0));
+pi.push({n:i,a:amt,c:gc(i)==='red'?'红':gc(i)==='blue'?'蓝':'绿',sx:s.name,wx:w.name,o:(o||1.0).toFixed(1),pay:pay});
+}
+pi.sort(function(a,b){return b.pay-a.pay;});
+for(var i=0;i<pi.length;i++){var it=pi[i];csv+=p2(it.n)+','+it.c+','+it.sx+','+it.wx+','+it.a+','+it.o+','+it.pay+'\n';}
+var pt=0,pp=0;for(var i=0;i<pi.length;i++){pt+=pi[i].a;pp+=pi[i].pay;}
+csv+='平码合计,'+pt+',,,'+pt+',,'+pp+'\n\n';
+
+csv+='【红蓝绿波维度】\n波色,包含号码,投注金额,赔率,应付金额\n';
+var bm={};
+for(var p=0;p<pans.length;p++){
+var d=pans[p].data||{};
+for(var k in d.bose)bm[k]=(bm[k]||0)+(d.bose[k]||0);
+}
+var bi=[];
+for(var i=0;i<BOSE.length;i++){
+var amt=bm[BOSE[i].name]||0;
+var o=oddsConfig.bose;
+var pay=Math.round(amt*(o||1.0));
+bi.push({name:BOSE[i].name,nums:BOSE[i].nums.join(';'),a:amt,o:(o||1.0).toFixed(1),pay:pay});
+}
+bi.sort(function(a,b){return b.pay-a.pay;});
+for(var i=0;i<bi.length;i++){var it=bi[i];csv+=it.name+','+it.nums+','+it.a+','+it.o+','+it.pay+'\n';}
+var bt=0,bp=0;for(var i=0;i<bi.length;i++){bt+=bi[i].a;bp+=bi[i].pay;}
+csv+='波色合计,'+bt+',,,'+bp+'\n\n';
+
+csv+='【五行维度】\n五行,包含号码,投注金额,赔率,应付金额\n';
+var wm={};
+for(var p=0;p<pans.length;p++){
+var d=pans[p].data||{};
+for(var k in d.wx)wm[k]=(wm[k]||0)+(d.wx[k]||0);
+}
+var wi=[];
+for(var i=0;i<WX.length;i++){
+var amt=wm[WX[i].name]||0;
+var o=oddsConfig.wx;
+var pay=Math.round(amt*(o||1.0));
+wi.push({name:WX[i].name,nums:WX[i].nums.join(';'),a:amt,o:(o||1.0).toFixed(1),pay:pay});
+}
+wi.sort(function(a,b){return b.pay-a.pay;});
+for(var i=0;i<wi.length;i++){var it=wi[i];csv+=it.name+','+it.nums+','+it.a+','+it.o+','+it.pay+'\n';}
+var wt=0,wp=0;for(var i=0;i<wi.length;i++){wt+=wi[i].a;wp+=wi[i].pay;}
+csv+='五行合计,'+wt+',,,'+wp+'\n\n';
+
+// 大小维度导出
+csv+='【大小维度】\n大小,包含号码,投注金额,赔率,应付金额\n';
+var dxm={};
+for(var p=0;p<pans.length;p++){
+var d=pans[p].data||{};
+for(var k in d.daxiao)dxm[k]=(dxm[k]||0)+(d.daxiao[k]||0);
+}
+var dxi=[];
+for(var i=0;i<DX_CONFIG.length;i++){
+var amt=dxm[DX_CONFIG[i].name]||0;
+var o=oddsConfig.daxiao;
+var pay=Math.round(amt*(o||1.0));
+dxi.push({name:DX_CONFIG[i].name,nums:DX_CONFIG[i].nums.join(';'),a:amt,o:(o||1.0).toFixed(1),pay:pay});
+}
+dxi.sort(function(a,b){return b.pay-a.pay;});
+for(var i=0;i<dxi.length;i++){var it=dxi[i];csv+=it.name+','+it.nums+','+it.a+','+it.o+','+it.pay+'\n';}
+var dxt=0,dxp=0;for(var i=0;i<dxi.length;i++){dxt+=dxi[i].a;dxp+=dxi[i].pay;}
+csv+='大小合计,'+dxt+',,'+dxp+'\n\n';
+
+// 单双维度导出
+csv+='【单双维度】\n单双,包含号码,投注金额,赔率,应付金额\n';
+var dsm={};
+for(var p=0;p<pans.length;p++){
+var d=pans[p].data||{};
+for(var k in d.danshuang)dsm[k]=(dsm[k]||0)+(d.danshuang[k]||0);
+}
+var dsi=[];
+for(var i=0;i<DS_CONFIG.length;i++){
+var amt=dsm[DS_CONFIG[i].name]||0;
+var o=oddsConfig.danshuang;
+var pay=Math.round(amt*(o||1.0));
+dsi.push({name:DS_CONFIG[i].name,nums:DS_CONFIG[i].nums.join(';'),a:amt,o:(o||1.0).toFixed(1),pay:pay});
+}
+dsi.sort(function(a,b){return b.pay-a.pay;});
+for(var i=0;i<dsi.length;i++){var it=dsi[i];csv+=it.name+','+it.nums+','+it.a+','+it.o+','+it.pay+'\n';}
+var dst=0,dsp=0;for(var i=0;i<dsi.length;i++){dst+=dsi[i].a;dsp+=dsi[i].pay;}
+csv+='单双合计,'+dst+',,'+dsp+'\n';
+
+var blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
+var link=document.createElement('a');
+link.href=URL.createObjectURL(blob);
+link.download='香港五行彩总台报表_'+new Date().toISOString().slice(0,10)+'.csv';
+link.click();
+showStatus('📥 报表已导出（含大小/单双维度）');
+}
+
+function clearAll(){
+if(!confirm('确定清空所有数据？\n⚠️ 此操作不可恢复！\n（赔率与抽水设置将保留）'))return;
+frontData={name:'',pans:[]};
+safeStorageRemove('wuxingcai_front_data');
+renderCards();
+updateStats();
+updateInfo();
+renderDetail();
+showStatus('🗑️ 已清空所有数据（赔率与抽水设置保留）');
+}
+
+function showStatus(msg){
+var el=document.getElementById('status');
+if(el)el.textContent=msg;
+setTimeout(function(){var el2=document.getElementById('status');if(el2)el2.textContent='【总台】汇总收款前台所有子盘，各维度独立统计（7维完整版）';},3000);
+}
+
+// 启动：确保DOM就绪
+if(document.readyState==='loading'){
+document.addEventListener('DOMContentLoaded',init);
+}else{
+init();
+}
+</script>
+</body>
+</html>
